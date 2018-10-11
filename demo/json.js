@@ -47,6 +47,15 @@ var Json_Config = [{
 		activity:"com.yanhui.qktx/.activity.MainActivity",
 		by:"text",		//待修改
 		updata:"安全升级"	//待修改
+	},
+	"东方头条":{
+		func:function (){return 东方头条()},
+		time_run:30,
+		time_read:[60,80],
+		sign:false,
+		activity:"com.yanhui.qktx/.activity.MainActivity",
+		by:"text",		//待修改
+		updata:"安全升级"	//待修改
 	}
 }];
 
