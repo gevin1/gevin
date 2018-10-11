@@ -53,7 +53,7 @@ var Json_Config = [{
 		time_run:30,
 		time_read:[60,80],
 		sign:false,
-		activity:"com.yanhui.qktx/.activity.MainActivity",
+		activity:"com.songheng.eastnews/com.songheng.eastfirst.common.view.activity.MainActivity",
 		by:"text",		//待修改
 		updata:"安全升级"	//待修改
 	}
@@ -131,7 +131,6 @@ function Delete_JsonFile(){
 function Is_SginInDay(){
 	var tamp_json = Load_Config();
 
-	print(new Date().getDate() != tamp_json[0][a]["day"]);
 	if(new Date().getDate() != tamp_json[0][a]["day"]){
 		for(a in tamp_json[0]){
 			tamp_json[0][a]["sgin"] = false;
