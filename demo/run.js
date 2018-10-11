@@ -469,7 +469,7 @@ function 东方头条(){
 		while(!Tap("text","新闻",3000)){
 			if(!Tap("text",Pattern.compile("忽略|.*close.*"),Random_num(2000,3000))){
 				for(var i=0;i<=10;i++){
-					if(By.clazz('android.widget.ImageView').clickAt(i);){break;}
+					if(By.clazz('android.widget.ImageView').clickAt(i)){break;}
 				};
 				device.pressBack();
 				sleep(2000);
@@ -488,12 +488,8 @@ function 东方头条(){
 		Random_title(["推荐","热点","娱乐","广东"]);
 		
 		//随机选择 刷新 or 滑动列表
-		if(0 < Random_num(0,1,2)){
-			for(var i=1;i<=Random_num(1,4);i++)
-				Random_Swipt("top", Random_num(900,1500));
-		}else{
-			Tap("text","新闻", 3000);
-		};
+		for(var i=1;i<=Random_num(1,4);i++)
+			Random_Swipt("top", Random_num(900,1500));
 		
 		//选择文章
 		Tap("text",Pattern.compile("[0-9]+阅读|[0-9]+万阅读"),4000);
@@ -511,17 +507,19 @@ function 东方头条(){
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
 					if(bool){
-						var rect = findImg(scriptDir+"/dftt_ad.png",557,307,615,362,32,2,0x101010,0.9);
-						if(-1 != rect.left){device.click(rect.x+20, rect.y+20);};
+						var rect = findImg(320,480,scriptDir+"/dftt_ad.png",557,307,615,362,32,2,0x101010,0.9);
+						if(-1 != rect.left){device.click(rect.left+20, rect.top+20);};
 						
 						var node = findView(By.desc('猜你喜欢 '));
+						print(node);
 						if(undefined != node){
-							var rect = node.getVisibleBounds();
-							device.click(360,Number(rect.top)-360);
+							var rect2 = node.getVisibleBounds();
+							device.click(360,Number(rect2.top)-360);
+							bool = false;
 						};
 					};
 					
-					Random_Swipt("top",Random_num(3500,5000));
+					Random_Swipt("top",Random_num(2500,4000));
 				};
 				
 				device.pressBack();
