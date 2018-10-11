@@ -1,3 +1,6 @@
+//获取手机屏幕大小
+var Width = device.getDisplayWidth();
+var Height = device.getDisplayHeight();
 
 //寻找节点文本
 function Is_TextView(value){
