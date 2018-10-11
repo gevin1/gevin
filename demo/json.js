@@ -53,13 +53,16 @@ var Json_Config = [{
 
 var Json_path = "/sdcard/com.demo.zz/config.txt";
 
-Delete_JsonFile();
 
-Is_JsonFile();
-
-Is_SginInDay();
-
-
+function Main_json(){
+	
+	Delete_JsonFile();
+	
+	Is_JsonFile();
+	
+	Is_SginInDay();
+	
+}
 
 
 
