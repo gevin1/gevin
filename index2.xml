@@ -21,8 +21,8 @@
 <!--分割线--><Text backgroundColor="#6699ff" height="3" width="match"/>
 		
 		<LinearLayout gravity="center" height="60" orientation="horizontal" width="match">
-			<Text text="启动11" textSize="16" weight="1" />
-			<Spinner name="spinner_11" height="60" weight="2" items=";聚看点;趣看点" />
+			<Text text="启动21" textSize="16" weight="1" />
+			<Spinner name="spinner_11" height="60" weight="2" items=";聚看点;趣看点;66666" />
 			<Edit name="Edit_Read_run_11" height="match" hint="run" weight="1" />
 			<Edit name="Edit_Read_Min_11" height="match" hint="min" weight="1" />
 			<Edit name="Edit_Read_Max_11" height="match" hint="man" weight="1" />
