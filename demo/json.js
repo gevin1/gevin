@@ -1,5 +1,6 @@
 //创建Json数据
 var Json_Config = [{
+	"签到时间":{day:10},
 	"聚看点":{
 		func:function (){return 聚看点()},
 		time_run:30,
@@ -48,12 +49,14 @@ var Json_Config = [{
 }];
 
 
-var json_path = "/sdcard/config.txt";
-
+var Json_path = "/sdcard/com.demo.zz/config.txt";
 
 Delete_JsonFile();
 
 Is_JsonFile();
+
+Is_SginInDay();
+
 
 
 
@@ -63,7 +66,7 @@ Is_JsonFile();
 
 //加载_配置文件 - 返回 Json 数据
 function Load_Config(){
-	var json = FileUtil.read(json_path);
+	var json = FileUtil.read(Json_path);
 	return JSON.parse(json);
 };
 
@@ -91,30 +94,41 @@ function Get_Json(){
 function Set_SginIn(app){
 	var tamp_json = Load_Config();
 	tamp_json[0][app]["sign"] = true;
-	FileUtil.write(json_path,JSON.stringify(tamp_json));
+	FileUtil.write(Json_path,JSON.stringify(tamp_json));
 };
 
 //检查Json文件是否存在 - 签到记录
 function Is_JsonFile(){
-	if(!java.io.File(json_path).exists()){
-		FileUtil.write(json_path,JSON.stringify(Json_Config));
+	if(!java.io.File(Json_path).exists()){
+		FileUtil.write(Json_path,JSON.stringify(Json_Config));
 	};
 };
 
-//
+//检测本地Json对象是否需要更新
 function Delete_JsonFile(){
 	var tamp_json = Load_Config();
+	
 	for(a in Json_Config[0]){
 		if(undefined == tamp_json[0][a]){
-			java.io.File(json_path).delete();
+			java.io.File(Json_path).delete();
 			break;
 		};
 	};
 };
 
+//检测 Json签到状态 是否为最新 
+function Is_SginInDay(){
+	var tamp_json = Load_Config();
 
+	print(new Date().getDate() != tamp_json[0][a]["day"]);
+	if(new Date().getDate() != tamp_json[0][a]["day"]){
+		for(a in tamp_json[0]){
+			tamp_json[0][a]["sgin"] = false;
+		};
+	};
 
-
+	FileUtil.write(Json_path,JSON.stringify(tamp_json));
+};
 
 
 
