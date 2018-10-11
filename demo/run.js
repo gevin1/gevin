@@ -514,7 +514,7 @@ function 东方头条(){
 						print(node);
 						if(undefined != node){
 							var rect2 = node.getVisibleBounds();
-							device.click(360,Number(rect2.top)-360);
+							device.click(360,Number(rect2.top)-320);
 							bool = false;
 						};
 					};
