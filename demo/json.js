@@ -511,13 +511,15 @@ function 东方头条(){
 						if(-1 != rect.left){device.click(rect.left+20, rect.top+20);};
 						
 						var node = findView(By.desc('猜你喜欢 '));
+						print(node);
 						if(undefined != node){
 							var rect2 = node.getVisibleBounds();
 							device.click(360,Number(rect2.top)-360);
+							bool = false;
 						};
 					};
 					
-					Random_Swipt("top",Random_num(3500,5000));
+					Random_Swipt("top",Random_num(2500,4000));
 				};
 				
 				device.pressBack();
