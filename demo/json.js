@@ -1,3 +1,5 @@
+print("加载成功");
+
 //创建Json数据
 var Json_Config = [{
 	"签到时间":{day:10},
@@ -99,6 +101,7 @@ function Set_SginIn(app){
 
 //检查Json文件是否存在 - 签到记录
 function Is_JsonFile(){
+	print(!java.io.File(Json_path).exists());
 	if(!java.io.File(Json_path).exists()){
 		FileUtil.write(Json_path,JSON.stringify(Json_Config));
 	};
