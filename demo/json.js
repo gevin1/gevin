@@ -55,18 +55,14 @@ var Json_path = "/sdcard/com.demo.zz/config.txt";
 
 
 function Main_json(){
-	
-	Delete_JsonFile();
-	
+
 	Is_JsonFile();
+
+	Delete_JsonFile();
 	
 	Is_SginInDay();
 	
 }
-
-
-
-
 
 
 //加载_配置文件 - 返回 Json 数据
@@ -104,7 +100,6 @@ function Set_SginIn(app){
 
 //检查Json文件是否存在 - 签到记录
 function Is_JsonFile(){
-	print(!java.io.File(Json_path).exists());
 	if(!java.io.File(Json_path).exists()){
 		FileUtil.write(Json_path,JSON.stringify(Json_Config));
 	};
@@ -117,6 +112,7 @@ function Delete_JsonFile(){
 	for(a in Json_Config[0]){
 		if(undefined == tamp_json[0][a]){
 			java.io.File(Json_path).delete();
+			Is_JsonFile();
 			break;
 		};
 	};
