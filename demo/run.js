@@ -457,7 +457,84 @@ function 趣看天下(){
 	};
 };
 
+function 东方头条(){
+	var tamp_read = 0;
+	
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","新闻",3000)){
+			if(!Tap("text",Pattern.compile("忽略|.*close.*"),Random_num(2000,3000))){
+				for(var i=0;i<=10;i++){
+					if(By.clazz('android.widget.ImageView').clickAt(i);){break;}
+				};
+				device.pressBack();
+				sleep(2000);
+			};
+		};
 
+		if(0 == tamp_read && !Get_SginIn("东方头条")){
+			Tap("text","任务",Random_num(6000,10000));
+			device.pressBack();
+			Tap("desc","立即签到",Random_num(3000,5000));
+			Tap("text","新闻",Random_num(2000,3000));
+			Set_SginIn("东方头条");
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","热点","娱乐","广东"]);
+		
+		//随机选择 刷新 or 滑动列表
+		if(0 < Random_num(0,1,2)){
+			for(var i=1;i<=Random_num(1,4);i++)
+				Random_Swipt("top", Random_num(900,1500));
+		}else{
+			Tap("text","新闻", 3000);
+		};
+		
+		//选择文章
+		Tap("text",Pattern.compile("[0-9]+阅读|[0-9]+万阅读"),4000);
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=20*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(Is_TextView("快去发表伟大言论吧！")){
+				sleep(2000);
+
+				var bool = true;
+				var wait_read = time();
+				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+					
+					if(bool){
+						var rect = findImg(scriptDir+"/dftt_ad.png",557,307,615,362,32,2,0x101010,0.9);
+						if(-1 != rect.left){device.click(rect.x+20, rect.y+20);};
+						
+						var node = findView(By.desc('猜你喜欢 '));
+						if(undefined != node){
+							var rect = node.getVisibleBounds();
+							device.click(360,Number(rect.top)-360);
+						};
+					};
+					
+					Random_Swipt("top",Random_num(3500,5000));
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				Random_num(2000,4000);
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	}; 	
+};
 
 
 function (){};
