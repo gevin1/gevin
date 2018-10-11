@@ -1,14 +1,11 @@
-//获取手机屏幕大小
-var Width = device.getDisplayWidth(); var Height = device.getDisplayHeight();
+print("加载成功");
+
 //全局变量
 var Run_List = Array();
 var Time_Run,Time_Read;
 
 
-//Main();
-
-
-function Main(){
+function Main_run(){
 	
 	Create_RunList();
 	
