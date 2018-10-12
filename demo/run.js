@@ -543,19 +543,18 @@ function 值得看看(){
 		
 		//判断是否处于主界面状态
 		while(!Tap("text","刷新",3000)){
-			if(!Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000))){
-				device.pressBack();
-				sleep(2000);
-			};
+			Tap("text","确定",Random_num(2000,3000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			IsUpDataApp("值得看看");
 		};
 
-		if(1 == tamp_read && !Get_SginIn("微鲤看看")){
+		if(1 == tamp_read && !Get_SginIn("值得看看")){
 			Tap("text","签到",Random_num(8000,10000));
 			device.click(InX(539),InY(292));
 			sleep(3000);
 			device.pressBack();
 			sleep(2000);
-			Set_SginIn("微鲤看看");
+			Set_SginIn("值得看看");
 		}
 
 		//随机选择标题栏
