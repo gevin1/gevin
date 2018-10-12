@@ -23,7 +23,8 @@ function Create_RunList(){
 	
 	//获取界面数据 - 生成数组
 	for(var i=1;i<=30;i++){
-		print(config.read("spinner_"+i+".text"));
+		toast(config.read("spinner_"+i+".text"));
+		sleep(2000);
 		if("" != config.read("spinner_"+i+".text")){
 			var tamp = config.read("spinner_"+i+".text");
 			arr[num++] = tamp;
