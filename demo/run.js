@@ -1,11 +1,10 @@
-print("run 加载成功");
-
-//全局变量
 var Run_List = Array();
 var Time_Run,Time_Read;
 
 
 function Main_run(){
+
+	print("run 加载成功");
 	
 	Create_RunList();
 	
