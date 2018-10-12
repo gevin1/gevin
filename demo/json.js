@@ -104,7 +104,7 @@ function Get_Json(){
 
 //设置_签到状态
 function Set_SginIn(app){
-	Json_Config[0][a]["sign"] = true;
+	Json_Config[0][app]["sign"] = true;
 	FileUtil.write(Path_Json,JSON.stringify(Json_Config));
 };
 
