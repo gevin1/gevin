@@ -70,10 +70,8 @@ var Json_Config = [{
 
 
 
-var Path_Config = scriptDir+"/config.txt";
 
-
-function Main_json(){
+run = function(){
 
 	Is_JsonFile();
 
@@ -81,14 +79,9 @@ function Main_json(){
 	
 	Is_SginInDay();
 	
-}
+}();
 
 
-//加载_配置文件 - 返回 Json 数据
-function Load_Config(){
-	var json = FileUtil.read(Path_Config);
-	return JSON.parse(json);
-};
 
 //设置_配置文件
 function Set_Config(app,name,value){	
@@ -112,44 +105,32 @@ function Get_Json(){
 
 //设置_签到状态
 function Set_SginIn(app){
-	var tamp_json = Load_Config();
-	tamp_json[0][app]["sign"] = true;
-	FileUtil.write(Path_Config,JSON.stringify(tamp_json));
-};
-
-//检查Json文件是否存在 - 签到记录
-function Is_JsonFile(){
-	if(!java.io.File(Path_Config).exists()){
-		FileUtil.write(Path_Config,JSON.stringify(Json_Config));
-	};
+	Json_Config[0][a]["sign"] = true;
+	FileUtil.write(Get_Path_Json(),JSON.stringify(Json_Config));
 };
 
 //检测本地Json对象是否需要更新
-function Delete_JsonFile(){
-	var tamp_json = Load_Config();
+function UpData_JsonFile(){
 	
-	for(a in Json_Config[0]){
-		if(undefined == tamp_json[0][a]){
-			java.io.File(Path_Config).delete();
-			Is_JsonFile();
-			break;
+	//返回本地Json数据 - 不存在 - 则返回初始化Json数据
+	var tamp_json = (null == FileUtil.read(Get_Path_Json()) ? Json_Config : JSON.parse(FileUtil.read(Get_Path_Json())));
+
+	if(new Date().getDate() == Number(tamp_json[0]["签到时间"]["day"])){
+
+		//更新签到状态
+		for(a in Json_Config[0]){
+			if("签到时间" != a){ 
+				Json_Config[0][a]["sign"] = tamp_json[0][a]["sign"];
+			};
 		};
-	};
+		
+	}else{ Json_Config[0]["签到时间"]["day"] = new Date().getDate() };
+	
+	//重写 Json
+	FileUtil.write(Path_Config,JSON.stringify(Json_Config));
 };
 
-//检测 Json签到状态 是否为最新 
-function Is_SginInDay(){
-	var tamp_json = Load_Config();
-
-	if(new Date().getDate() != tamp_json[0][a]["day"]){
-		for(a in tamp_json[0]){
-			tamp_json[0][a]["sgin"] = false;
-		};
-	};
-
-	FileUtil.write(Path_Config,JSON.stringify(tamp_json));
+//获取本地Json路径
+function Get_Path_Json(){
+	return "/storage/emulated/0/config.txt";
 };
-
-
-
-
