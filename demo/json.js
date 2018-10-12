@@ -2,7 +2,7 @@
 var Json_Config = [{
 	"签到时间":{day:13},
 	"聚看点":{
-		func:function (){return 聚看点()},
+		//func:function (){return 聚看点()},
 		time_run:30,
 		time_read:[60,80],
 		sign:false,
@@ -11,7 +11,7 @@ var Json_Config = [{
 		updata:"com.xiangzi.jukandian:id/btn_update_now"
 	},
 	"趣看点":{
-		func:function (){return 趣看点()},
+		//func:function (){return 趣看点()},
 		time_run:30,
 		time_read:[60,80],
 		sign:false,
@@ -20,7 +20,7 @@ var Json_Config = [{
 		updata:"立即更新"
 	},
 	"惠头条":{
-		func:function (){return 惠头条()},
+		//func:function (){return 惠头条()},
 		time_run:30,
 		time_read:[60,80],
 		sign:false,
@@ -29,7 +29,7 @@ var Json_Config = [{
 		updata:"安全升级"
 	},
 	"微鲤看看":{
-		func:function (){return 微鲤看看()},
+		//func:function (){return 微鲤看看()},
 		time_run:30,
 		time_read:[60,80],
 		sign:false,
@@ -38,7 +38,7 @@ var Json_Config = [{
 		updata:"安全升级"	//待修改
 	},
 	"趣看天下":{
-		func:function (){return 趣看天下()},
+		//func:function (){return 趣看天下()},
 		time_run:30,
 		time_read:[60,80],
 		sign:false,
@@ -47,7 +47,7 @@ var Json_Config = [{
 		updata:"安全升级"	//待修改
 	},
 	"东方头条":{
-		func:function (){return 东方头条()},
+		//func:function (){return 东方头条()},
 		time_run:30,
 		time_read:[60,80],
 		sign:false,
@@ -56,7 +56,7 @@ var Json_Config = [{
 		updata:"安全升级"	//待修改
 	},
 	"值得看看":{
-		func:function (){return 值得看看()},
+		//func:function (){return 值得看看()},
 		time_run:30,
 		time_read:[60,80],
 		sign:false,
