@@ -478,7 +478,7 @@ function 东方头条(){
 
 		if(0 == tamp_read && !Get_SginIn("东方头条")){
 			Tap("text","任务",Random_num(6000,10000));
-			device.pressBack();
+			Tap("res","com.songheng.eastnews:id/uj",Random_num(3000,5000));
 			Tap("desc","立即签到",Random_num(3000,5000));
 			Tap("text","新闻",Random_num(2000,3000));
 			Set_SginIn("东方头条");
@@ -511,7 +511,6 @@ function 东方头条(){
 						if(-1 != rect.left){device.click(rect.left+20, rect.top+20);};
 						
 						var node = findView(By.desc('猜你喜欢 '));
-						print(node);
 						if(undefined != node){
 							var rect2 = node.getVisibleBounds();
 							device.click(360,Number(rect2.top)-320);
@@ -534,5 +533,3 @@ function 东方头条(){
 	}; 	
 };
 
-
-function (){};
