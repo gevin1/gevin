@@ -62,7 +62,7 @@ var Json_Config = [{
 		time_run:30,
 		time_read:[60,80],
 		sign:false,
-		activity:"com.songheng.eastnews/com.songheng.eastfirst.common.view.activity.MainActivity",
+		activity:"com.weikuai.wknews/.ui.activity.MainActivity",
 		by:"text",
 		updata:"更新"
 	}
