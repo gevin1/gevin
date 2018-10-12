@@ -367,7 +367,7 @@ function 微鲤看看(){
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
-					Tap("text","展开查看全文",Random_num(1000,2000));
+					Tap("text",Pattern.compile("展开查看全文|收下啦"),Random_num(1000,2000));
 					
 					Random_Swipt("top",Random_num(2000,3500));
 				};
@@ -532,4 +532,85 @@ function 东方头条(){
 		
 	}; 	
 };
+
+function 值得看看(){
+	var tamp_read = 0;
+	
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","刷新",3000)){
+			if(!Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000))){
+				device.pressBack();
+				sleep(2000);
+			};
+		};
+
+		if(1 == tamp_read && !Get_SginIn("微鲤看看")){
+			Tap("text","签到",Random_num(8000,10000));
+			device.click(InX(539),InY(292));
+			sleep(3000);
+			device.pressBack();
+			sleep(2000);
+			Set_SginIn("微鲤看看");
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","财经","军事","热点","美图","女神"]);
+
+		//随机选择 刷新 or 滑动列表
+		if(0 < Random_num(0,1,2)){
+			for(var i=1;i<=Random_num(1,4);i++){
+				Random_Swipt("top", Random_num(900,1500));
+			};	
+		}else{
+			Tap("text","刷新", 3000);
+		};
+		
+		//选择文章
+		Tap("res","cn.weli.story:id/tv_title",4000);
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=20*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(Is_TextView("写评论...")){
+				sleep(2000);
+
+				var wait_read = time();
+				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+					
+					Tap("text",Pattern.compile("展开查看全文|收下啦"),Random_num(1000,2000));
+					
+					Random_Swipt("top",Random_num(2000,3500));
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				Random_num(2000,4000);
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
