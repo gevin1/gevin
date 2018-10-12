@@ -1,3 +1,5 @@
+print("xiaoyi 加载成功");
+
 //获取手机屏幕大小
 var Width = device.getDisplayWidth();
 var Height = device.getDisplayHeight();
@@ -122,14 +124,6 @@ function IsUpDataApp(app){
 function Exists(file){
 	return java.io.File(file).exists();
 }
-
-
-
-
-
-
-
-
 
 
 
