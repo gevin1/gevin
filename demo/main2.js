@@ -2,15 +2,19 @@ var Http = "https://gevin1.github.io/gevin/demo/";
 var Path_func = ["main2.js","json.js","xiaoyi.js","run.js"];
 
 
-run = function(){
+function Main_main(){
 	
 	Is_UpdataJs();
 	
 	include(scriptDir+"/xiaoyi.js");
+	
 	include(scriptDir+"/json.js");
+	Main_json();
+	
 	include(scriptDir+"/run.js");
-
-}();
+	Main_run();
+	
+};
 
 
 //检查是否需要更新
