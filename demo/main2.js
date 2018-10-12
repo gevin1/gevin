@@ -3,7 +3,11 @@ var Path_func = ["main2.js","json.js","xiaoyi.js","run.js"];
 
 
 function Main2(){
-
+	
+	for(var i=0;i<10;i++){
+		toast("23333333"+" | "+i);
+	};
+	
 	Is_UpdataJs();
 	
 	//加载JS文件
