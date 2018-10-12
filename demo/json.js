@@ -1,4 +1,4 @@
-print("加载成功");
+print("json 加载成功");
 
 //创建Json数据
 var Json_Config = [{
@@ -74,11 +74,11 @@ var Path_Json = "/storage/emulated/0/config.txt";
 
 
 
-run = function(){
+function Main_json(){
 
 	UpData_JsonFile();
 	
-}();
+};
 
 
 
