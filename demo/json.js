@@ -69,6 +69,9 @@ var Json_Config = [{
 }];
 
 
+var Path_Json = "/storage/emulated/0/config.txt";
+
+
 
 
 run = function(){
@@ -106,14 +109,14 @@ function Get_Json(){
 //设置_签到状态
 function Set_SginIn(app){
 	Json_Config[0][a]["sign"] = true;
-	FileUtil.write(Get_Path_Json(),JSON.stringify(Json_Config));
+	FileUtil.write(Path_Json,JSON.stringify(Json_Config));
 };
 
 //检测本地Json对象是否需要更新
 function UpData_JsonFile(){
 	
 	//返回本地Json数据 - 不存在 - 则返回初始化Json数据
-	var tamp_json = (null == FileUtil.read(Get_Path_Json()) ? Json_Config : JSON.parse(FileUtil.read(Get_Path_Json())));
+	var tamp_json = (null == FileUtil.read(Path_Json) ? Json_Config : JSON.parse(FileUtil.read(Path_Json)));
 
 	if(new Date().getDate() == Number(tamp_json[0]["签到时间"]["day"])){
 
@@ -127,10 +130,6 @@ function UpData_JsonFile(){
 	}else{ Json_Config[0]["签到时间"]["day"] = new Date().getDate() };
 	
 	//重写 Json
-	FileUtil.write(Get_Path_Json(),JSON.stringify(Json_Config));
+	FileUtil.write(Path_Json,JSON.stringify(Json_Config));
 };
 
-//获取本地Json路径
-function Get_Path_Json(){
-	return "/storage/emulated/0/config.txt";
-};
