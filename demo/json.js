@@ -72,15 +72,6 @@ var Path_Json = "/storage/emulated/0/config.txt";
 
 
 
-function Main_json(){
-
-	UpData_JsonFile();
-
-	print("json 加载成功");
-};
-
-
-
 //设置_配置文件
 function Set_Config(app,name,value){	
 	Json_Config[0][app][name] = value;
