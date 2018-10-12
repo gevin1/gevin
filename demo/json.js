@@ -56,8 +56,18 @@ var Json_Config = [{
 		activity:"com.songheng.eastnews/com.songheng.eastfirst.common.view.activity.MainActivity",
 		by:"text",		//待修改
 		updata:"安全升级"	//待修改
+	},
+	"值得看看":{
+		func:function (){return 值得看看()},
+		time_run:30,
+		time_read:[60,80],
+		sign:false,
+		activity:"com.songheng.eastnews/com.songheng.eastfirst.common.view.activity.MainActivity",
+		by:"text",
+		updata:"更新"
 	}
 }];
+
 
 
 var Path_Config = scriptDir+"/config.txt";
