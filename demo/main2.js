@@ -1,5 +1,7 @@
 
-run = function (){
+function Main_main(){
+
+	toast("加载成功");
 	
 	include(scriptDir+"/xiaoyi.js");
 	
@@ -9,4 +11,9 @@ run = function (){
 	include(scriptDir+"/run.js");
 	Main_run();
 	
-}();
+};
+
+
+
+
+
