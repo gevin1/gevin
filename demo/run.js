@@ -2,7 +2,7 @@ var Run_List = Array();
 var Time_Run,Time_Read;
 
 
-function Main_run(){
+run = function (){
 
 	print("run 加载成功");
 	toast("run 加载成功");
@@ -13,7 +13,7 @@ function Main_run(){
 	
 	Switch_App();
 
-};
+}();
 
 
 //生成运行列表
