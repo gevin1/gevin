@@ -507,7 +507,7 @@ function 东方头条(){
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
 					if(bool){
-						var rect = findImg(320,480,scriptDir+"/dftt_ad.png",557,307,615,362,32,2,0x101010,0.9);
+						var rect = findImg(scriptDir+"/dftt_ad.png",557,307,615,362,32,2,0x101010,0.9);
 						if(-1 != rect.left){device.click(rect.left+20, rect.top+20);};
 						
 						var node = findView(By.desc('猜你喜欢 '));
@@ -550,15 +550,16 @@ function 值得看看(){
 
 		if(1 == tamp_read && !Get_SginIn("值得看看")){
 			Tap("text","签到",Random_num(8000,10000));
-			device.click(InX(539),InY(292));
-			sleep(3000);
-			device.pressBack();
-			sleep(2000);
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			device.click(362,270);
+			sleep(Random_num(3000,5000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap("text","首页",Random_num(2000,3000));
 			Set_SginIn("值得看看");
 		}
 
 		//随机选择标题栏
-		Random_title(["推荐","财经","军事","热点","美图","女神"]);
+		Random_title(["娱乐","育儿","养生","生活","搞笑","健康","情感"]);
 
 		//随机选择 刷新 or 滑动列表
 		if(0 < Random_num(0,1,2)){
@@ -570,20 +571,26 @@ function 值得看看(){
 		};
 		
 		//选择文章
-		Tap("res","cn.weli.story:id/tv_title",4000);
+		Tap("text",Pattern.compile("[0-9]+阅|[0-9]+分钟前"),4000);
 
 		//等待文章加载
 		var wait_news = time();
 		while(time()-wait_news<=20*1000){
 			
 			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(Is_TextView("写评论...")){
+			if(Is_TextView("评论一下…")){
 				sleep(2000);
 
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
-					Tap("text",Pattern.compile("展开查看全文|收下啦"),Random_num(1000,2000));
+					if(bool){
+						var rect = findImg(scriptDir+"/zdkk_zk.png",0,0,0,0,32,2,0x101010,0.9);
+						if(-1 != rect.left){
+							device.click(rect.left+Random_num(1,40), rect.top+Random_num(1,20));
+							bool = false;
+						};
+					};
 					
 					Random_Swipt("top",Random_num(2000,3500));
 				};
