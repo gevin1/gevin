@@ -334,6 +334,10 @@ function 微鲤看看(){
 			Set_SginIn("微鲤看看");
 		}
 
+		if(Tap("text","领金币",Random_num(3500,5000))){
+			Tap("text",Pattern.compile("继续阅读|知道了"),Random_num(1500,2000));	
+		};
+
 		//随机选择标题栏
 		Random_title(["推荐","财经","军事","热点","美图","女神"]);
 
@@ -360,14 +364,10 @@ function 微鲤看看(){
 			if(Is_TextView("写评论...")){
 				sleep(2000);
 
-				var bool = true;
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
-					if(bool){
-						Tap("text","展开查看全文",Random_num(1000,2000))
-						bool = false;
-					};
+					Tap("text","展开查看全文",Random_num(1000,2000));
 					
 					Random_Swipt("top",Random_num(2000,3500));
 				};
