@@ -19,7 +19,7 @@ function Main_main(){
 
 //检查是否需要更新
 function Is_UpdataJs(){
-	if(0 == Number(HttpUtil.get(Http+"updata.txt"))){
+	if(1 == Number(HttpUtil.get(Http+"updata.txt"))){
 		toast("检测到需要更新,请等待...");
 		for(a in Path_func){
 			print(FileUtil.write(scriptDir+"/"+Path_func[a],HttpUtil.get(Http+Path_func[a])));
