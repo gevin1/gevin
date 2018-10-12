@@ -127,7 +127,7 @@ function UpData_JsonFile(){
 	}else{ Json_Config[0]["签到时间"]["day"] = new Date().getDate() };
 	
 	//重写 Json
-	FileUtil.write(Path_Config,JSON.stringify(Json_Config));
+	FileUtil.write(Get_Path_Json(),JSON.stringify(Json_Config));
 };
 
 //获取本地Json路径
