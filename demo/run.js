@@ -1,17 +1,17 @@
-print("加载成功");
+print("run 加载成功");
 
 //全局变量
 var Run_List = Array();
 var Time_Run,Time_Read;
 
 
-run = function(){
+function Main_run(){
 	
 	Create_RunList();
 	
 	Switch_App();
 
-}();
+};
 
 
 //生成运行列表
