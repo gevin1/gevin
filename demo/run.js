@@ -5,13 +5,13 @@ var Run_List = Array();
 var Time_Run,Time_Read;
 
 
-function Main_run(){
+run = function(){
 	
 	Create_RunList();
 	
 	Switch_App();
 
-};
+}();
 
 
 //生成运行列表
@@ -540,10 +540,10 @@ function 值得看看(){
 	var wait_time = time();
 	while(time()-wait_time<=Time_Run){
 		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
-		
+
 		//判断是否处于主界面状态
 		while(!Tap("text","刷新",3000)){
-			Tap("text","确定",Random_num(2000,3000));
+			Tap("text",Pattern.compile("继续阅读|确定"),Random_num(2000,3000));
 			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
 			IsUpDataApp("值得看看");
 		};
@@ -559,8 +559,11 @@ function 值得看看(){
 		}
 
 		//随机选择标题栏
-		Random_title(["娱乐","育儿","养生","生活","搞笑","健康","情感"]);
-
+		device.click(Random_num(640,715),Random_num(170,200));
+		sleep(Random_num(4000,5000));
+		Random_title(["推荐","美文","汽车","女人","娱乐","育儿","养生","生活","搞笑","健康","情感","国际","时尚"]);
+		while(!Is_TextView("刷新")){sleep(1000);};
+		
 		//随机选择 刷新 or 滑动列表
 		if(0 < Random_num(0,1,2)){
 			for(var i=1;i<=Random_num(1,4);i++){
@@ -581,13 +584,14 @@ function 值得看看(){
 			if(Is_TextView("评论一下…")){
 				sleep(2000);
 
+				var bool = true;
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
 					if(bool){
 						var rect = findImg(scriptDir+"/zdkk_zk.png",0,0,0,0,32,2,0x101010,0.9);
 						if(-1 != rect.left){
-							device.click(rect.left+Random_num(1,40), rect.top+Random_num(1,20));
+							device.click(rect.left+Random_num(-60,600), rect.top+Random_num(-10,10));
 							bool = false;
 						};
 					};
@@ -597,7 +601,7 @@ function 值得看看(){
 				
 				device.pressBack();
 				tamp_read++;
-				Random_num(2000,4000);
+				Random_num(3000,5000);
 				break;
 			};
 			
