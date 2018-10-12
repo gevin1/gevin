@@ -41,8 +41,11 @@ function Create_RunList(){
 	var run_start = config.read("spinner_start.text")
 	
 	for(var i=0;i<arr.length;i++)
-		if(0 < num || run_start == arr[i])
+		if(0 < num || run_start == arr[i]){
+			print(text);
 			Run_List[num++] = arr[i];
+		};
+			
 	
 	if(0 != loop_num)
 		for(var i=0;i<loop_num;i++)
@@ -136,8 +139,7 @@ function 聚看点(){
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 
 					if(bool){	
-						//聚看点_找图展开 - findPic(720,1280,scriptDir+"/720_1280_news_zk.png",470,300,540,1200,0x101010,0.9)
-						var news_zk = By.res('readBtn').getView()
+						var news_zk = By.res('readBtn').getView();
 						if(null != By.res('readBtn').getView()){
 							news_zk.click();
 							sleep(Random_num(1300,2000));
