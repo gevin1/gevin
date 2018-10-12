@@ -1,5 +1,3 @@
-print("json 加载成功");
-
 //创建Json数据
 var Json_Config = [{
 	"签到时间":{day:13},
@@ -77,7 +75,8 @@ var Path_Json = "/storage/emulated/0/config.txt";
 function Main_json(){
 
 	UpData_JsonFile();
-	
+
+	print("json 加载成功");
 };
 
 
@@ -118,9 +117,10 @@ function UpData_JsonFile(){
 			};
 		};
 		
-	}else{ Json_Config[0]["签到时间"]["day"] = new Date().getDate() };
+	}else{ Json_Config[0]["签到时间"]["day"] = new Date().getDate()};
 	
 	//重写 Json
+	print(JSON.stringify(Json_Config));
 	FileUtil.write(Path_Json,JSON.stringify(Json_Config));
 };
 
