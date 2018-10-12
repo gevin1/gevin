@@ -5,6 +5,9 @@ var Time_Run,Time_Read;
 function Main_run(){
 
 	print("run 加载成功");
+	toast("run 加载成功");
+	
+	UpData_JsonFile();
 	
 	Create_RunList();
 	
