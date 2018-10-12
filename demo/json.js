@@ -2,7 +2,7 @@ print("json 加载成功");
 
 //创建Json数据
 var Json_Config = [{
-	"签到时间":{day:10},
+	"签到时间":{day:13},
 	"聚看点":{
 		func:function (){return 聚看点()},
 		time_run:30,
@@ -94,13 +94,8 @@ function Get_Config(app,name){
 
 //获取_签到状态
 function Get_SginIn(app){
-	return Load_Config()[0][app]["sign"];
+	return Json_Config[0][app]["sign"];
 };
-
-//获取 Json 数据
-function Get_Json(){
-	return Json_Config[0];
-}
 
 //设置_签到状态
 function Set_SginIn(app){
