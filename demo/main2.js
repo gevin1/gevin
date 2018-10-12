@@ -6,6 +6,7 @@ function Main2(){
 	
 	for(var i=0;i<10;i++){
 		toast("23333333"+" | "+i);
+		sleep(1000);
 	};
 	
 	Is_UpdataJs();
