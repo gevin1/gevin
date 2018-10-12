@@ -76,11 +76,7 @@ var Path_Json = "/storage/emulated/0/config.txt";
 
 run = function(){
 
-	Is_JsonFile();
-
-	Delete_JsonFile();
-	
-	Is_SginInDay();
+	UpData_JsonFile();
 	
 }();
 
