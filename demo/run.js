@@ -25,7 +25,6 @@ function Create_RunList(){
 	for(var i=1;i<=30;i++){
 		tamp = config.read("spinner_"+i+".text");
 		if("" != tamp && null != tamp){
-			var tamp = config.read("spinner_"+i+".text");
 			arr[num++] = tamp;
 			Set_Config(tamp,"time_run",config.read("Edit_Read_run_"+i+".text"));
 			
