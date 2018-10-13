@@ -19,18 +19,14 @@ function Tap(type,value,delay){
 	if(null == delay){delay = 0};
 
 	//类型选择
-	if("text" == type)
-		node = findView(By.text(value));
-	else if("res" == type)
-		node = findView(By.res(value));
-	else if("desc" == type)
-		node = findView(By.desc(value));
-	else if("clazz" == type)
-		node =findView(By.clazz(value));
+	if("text" == type){			node = findView(By.text(value));
+	}else if("res" == type){		node = findView(By.res(value));
+	}else if("desc" == type){	node = findView(By.desc(value));
+	}else if("clazz" == type){	node = findView(By.clazz(value));};
 	
 	if(undefined != node){
-		node.click();
-		toast(value);
+		var rect = node.getVisibleBounds();
+		Tap_RandomRect(rect.left,rect.top,rect.right,rect.bottom);
 		sleep(delay);
 		return true;
 	}else{
@@ -48,9 +44,7 @@ function Random_title(arr){
 	
 	while(true){
 		var num = Random_num(0,arr.length-1);
-		var node = findView(By.text(arr[num]));
-		if(undefined != node){
-			node.click();
+		if(Tap("text",arr[num])){
 			toast("选择标题栏 | "+arr[num]);
 			return;
 		};
@@ -125,7 +119,12 @@ function Exists(file){
 	return java.io.File(file).exists();
 }
 
-
+//随机在范围内点击
+function Tap_RandomRect(left,top,right,bottom){
+	var num1 = (right - left) * 0.1;
+	var num2 = (bottom - top) * 0.1;
+	device.click(Random_num(left+num1,right-num1),Random_num(top+num2,bottom-num2));
+}
 
 
 
