@@ -61,7 +61,7 @@ function Switch_App(){
 
 	for(a in Run_List){	
 		device.pressHome();
-		Time_Run = Get_Config(Run_List[a],"time_run")*60000;
+		Time_Run = Get_Config(Run_List[a],"time_run") * 60000;
 		Time_Read = Get_Config(Run_List[a],"time_read");
 		toast("准备启动 | " + Run_List[a]);
 		device.pressHome();
@@ -70,8 +70,7 @@ function Switch_App(){
 		sleep(3000);
 		device.click(360, 1150);	//菜单
 		device.pressHome();
-		Is_RunApp(Run_List[a]);
-		Get_Config(app,"func")();
+		Get_Config(Run_List[a],"func")();
 	};
 	
 };
@@ -127,7 +126,7 @@ function 聚看点(){
 			Random_Swipt("top", Random_num(300,1000));
 		
 		//选择文章
-		Tap("text",Pattern.compile("[0-9]+阅读|0-9]+万阅读"),3000);
+		Tap("text",Pattern.compile("[0-9]*阅读|0-9]*万阅读"),3000);
 		
 		//等待文章加载
 		var wait_news = time();
