@@ -7,7 +7,7 @@ run = function (){
 	print("run 加载成功");
 	toast("run 加载成功");
 	
-	UpData_JsonFile();
+	//UpData_JsonFile();
 	
 	Create_RunList();
 	
