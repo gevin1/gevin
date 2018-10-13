@@ -41,8 +41,9 @@ function Create_RunList(){
 	var run_start = config.read("spinner_start.text")
 	
 	for(var i=0;i<arr.length;i++)
+		print(arr[i]);
 		if(0 < num || run_start == arr[i]){
-			print(text);
+			print(num);
 			Run_List[num++] = arr[i];
 		};
 			
