@@ -2,18 +2,18 @@ var Run_List = Array();
 var Time_Run,Time_Read;
 
 
-run = function (){
+function Main_run(){
 
 	print("run 加载成功");
 	toast("run 加载成功");
 	
-	//UpData_JsonFile();
+	UpData_JsonFile();
 	
 	Create_RunList();
 	
 	Switch_App();
 
-}();
+};
 
 
 //生成运行列表
