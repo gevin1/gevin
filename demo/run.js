@@ -646,7 +646,7 @@ function 值得看看(){
 
 
 
-function Print2(content){
+function print2(content){
 	toast(content);
 	print(content);
 }
