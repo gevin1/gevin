@@ -55,6 +55,14 @@ var Json_Config = [{
 		activity:"com.weikuai.wknews/.ui.activity.MainActivity",
 		by:"text",
 		updata:"更新"
+	},
+	"中青看点":{
+		func:function (){return 中青看点()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"cn.youth.news/com.weishang.wxrd.activity.MainActivity",
+		by:"text",		//待修改
+		updata:"更新"		//待修改
 	}
 }];
 
@@ -67,7 +75,8 @@ var Json_SignIn = {
 		"微鲤看看":false,
 		"趣看天下":false,
 		"东方头条":false,
-		"值得看看":false
+		"值得看看":false,
+		"中青看点":false
 	};
 	
 
