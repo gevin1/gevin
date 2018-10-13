@@ -47,7 +47,6 @@ function Create_RunList(){
 	
 	for(var i=0;i<arr.length;i++){
 		if(0 < num || run_start == arr[i]){
-			print(text);
 			Run_List[num++] = arr[i];
 		};
 	};
