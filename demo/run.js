@@ -2,7 +2,7 @@ var Run_List = Array();
 var Time_Run,Time_Read;
 
 
-run = function (){
+function Main_run(){
 
 	print("run 加载成功");
 	toast("run 加载成功");
@@ -13,18 +13,21 @@ run = function (){
 	
 	Switch_App();
 
-}();
+};
 
 
 //生成运行列表
 function Create_RunList(){
 	var arr = Array();
 	var num = 0;
+
+	print2("开始 | 生成运行列表");
 	
 	//获取界面数据 - 生成数组
 	for(var i=1;i<=30;i++){
 		tamp = config.read("spinner_"+i+".text");
-		if("" != tamp && null != tamp){
+		if("" != tamp && null != tamp ){
+			var tamp = config.read("spinner_"+i+".text");
 			arr[num++] = tamp;
 			Set_Config(tamp,"time_run",config.read("Edit_Read_run_"+i+".text"));
 			
@@ -34,29 +37,42 @@ function Create_RunList(){
 			print(tamp+"|"+ config.read("Edit_Read_Min_"+i+".text") + "|"+config.read("Edit_Read_Max_"+i+".text"));
 		};
 	};	
+
+	print2("结束 | 生成运行列表");
+	print2("开始 | 定位启动位置");
 			
-	//定位位置启动脚本
+	//定位启动位置
 	num = 0;
-	var loop_num = Number(config.read("loop_num.text"));
-	var run_start = config.read("spinner_start.text")
+	var run_start = config.read("spinner_start.text");
 	
-	for(var i=0;i<arr.length;i++)
-		print(arr[i]);
+	for(var i=0;i<arr.length;i++){
 		if(0 < num || run_start == arr[i]){
-			print(num);
+			print(text);
 			Run_List[num++] = arr[i];
 		};
-			
+	};
+
+	print2("结束 | 定位启动位置");
+	print2("开始 | 循环");
 	
-	if(0 != loop_num)
-		for(var i=0;i<loop_num;i++)
-			for(a in arr){Run_List[num++] = arr[a];};
+	var loop_num = Number(config.read("loop_num.text"));
+	if(0 != loop_num){
+		for(var i=0;i<loop_num;i++){
+			for(a in arr){
+				Run_List[num++] = arr[a];
+			};
+		};	
+	};
+
+	print2("结束 | 循环");
 	
 };
 
 //启动应用 - 开始阅读
 function Switch_App(){
 
+	print2("开始 | 启动应用 - 开始阅读");
+	
 	for(a in Run_List){	
 		device.pressHome();
 		Time_Run = Get_Config(Run_List[a],"time_run")*60000;
@@ -74,6 +90,8 @@ function Switch_App(){
 };
 
 function Is_RunApp(app){
+
+	print2("开始 | Is_RunApp");
 	
 	if(device.getAct() != Get_Config(app,"activity")){
 		execute("am start -n " + Get_Config(app,"activity"));
@@ -81,6 +99,8 @@ function Is_RunApp(app){
 		IsUpDataApp(app);
 		Get_Config(app,"func")();
 	};
+
+	print2("结束 | Is_RunApp");
 	
 };
 
@@ -627,5 +647,8 @@ function 值得看看(){
 
 
 
-
+function Print2(content){
+	toast(content);
+	print(content);
+}
 
