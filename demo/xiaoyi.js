@@ -46,6 +46,7 @@ function Random_title(arr){
 		var num = Random_num(0,arr.length-1);
 		if(Tap("text",arr[num])){
 			toast("选择标题栏 | "+arr[num]);
+			sleep(3000);
 			return;
 		};
 	};
