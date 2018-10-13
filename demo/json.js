@@ -75,7 +75,7 @@ var Json_SignIn = {
 var Path_Json = "/storage/emulated/0/config.txt";
 
 
-
+print("json 加载成功");
 
 
 //设置_配置文件
