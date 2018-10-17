@@ -29,16 +29,16 @@ var Json_Config = [{
 		time_run:30,
 		time_read:[60,80],
 		activity:"cn.weli.story/cn.etouch.ecalendar.MainActivity",
-		by:"text",		//待修改
-		updata:"安全升级"	//待修改
+		by:"text",
+		updata:"立即升级"
 	},
 	"趣看天下":{
 		func:function (){return 趣看天下()},
 		time_run:30,
 		time_read:[60,80],
 		activity:"com.yanhui.qktx/.activity.MainActivity",
-		by:"text",		//待修改
-		updata:"安全升级"	//待修改
+		by:"text",
+		updata:"立即更新"
 	},
 	"东方头条":{
 		func:function (){return 东方头条()},
@@ -63,6 +63,78 @@ var Json_Config = [{
 		activity:"cn.youth.news/com.weishang.wxrd.activity.MainActivity",
 		by:"text",		//待修改
 		updata:"更新"		//待修改
+	},
+	"百姓头条":{
+		func:function (){return 百姓头条()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.qiushibaike.inews/.home.HomeActivity",
+		by:"text",
+		updata:"确定"
+	},
+	"搜狐资讯":{
+		func:function (){return 搜狐资讯()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.sohu.infonews/com.sohu.quicknews.homeModel.activity.HomeActivity",
+		by:"text",		//待修改
+		updata:"确定"		//待修改
+	},
+	"今日视点":{
+		func:function (){return 今日视点()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.app.shidian/.view.main.MainActivity",
+		by:"text",		//待修改
+		updata:"确定"		//待修改
+	},
+	"松鼠资讯":{
+		func:function (){return 松鼠资讯()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.songshu.jucai/.app.main.MainAc",
+		by:"text",
+		updata:"立即升级"
+	},
+	"快头条":{
+		func:function (){return 快头条()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.ifeng.kuaitoutiao/com.ifeng.news2.activity.IfengTabMainActivity",
+		by:"text",		//待修改
+		updata:"立即升级"	//待修改
+	},
+	"快马小报":{
+		func:function (){return 快马小报()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.kuaima.browser/.module.MainActivity",
+		by:"text",		//待修改
+		updata:"立即升级"	//待修改
+	},
+	"蚂蚁头条":{
+		func:function (){return 蚂蚁头条()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.ldzs.zhangxin/com.weishang.wxrd.activity.MainActivity",
+		by:"text",		//待修改
+		updata:"立即升级"	//待修改
+	},
+	"牛牛头条":{
+		func:function (){return 牛牛头条()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.huolea.bull/.page.MainActivity",
+		by:"text",
+		updata:"立即更新"
+	},
+	"大众看点":{
+		func:function (){return 大众看点()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.dzkandian/.mvp.common.ui.activity.MainActivity",
+		by:"text",
+		updata:"立即更新"
 	}
 }];
 
@@ -76,12 +148,21 @@ var Json_SignIn = {
 		"趣看天下":false,
 		"东方头条":false,
 		"值得看看":false,
-		"中青看点":false
+		"中青看点":false,
+		"百姓头条":false,
+		"搜狐资讯":false,
+		"今日视点":false,
+		"松鼠资讯":false,
+		"快头条":false,
+		"快马小报":false,
+		"蚂蚁头条":false,
+		"牛牛头条":false,
+		"大众看点":false
 	};
 	
+//微信 com.tencent.mm/.ui.LauncherUI
 
-
-var Path_Json = "/storage/emulated/0/config.txt";
+var Path_Json = scriptDir+"/config.txt";
 
 
 print("json 加载成功");
