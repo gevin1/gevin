@@ -18,6 +18,8 @@ function Tap(type,value,delay){
 	//是否延迟
 	if(null == delay){delay = 0};
 
+	var tamp = time();
+	
 	//类型选择
 	if("text" == type){			node = findView(By.text(value));
 	}else if("res" == type){		node = findView(By.res(value));
@@ -28,8 +30,13 @@ function Tap(type,value,delay){
 		var rect = node.getVisibleBounds();
 		Tap_RandomRect(rect.left,rect.top,rect.right,rect.bottom);
 		sleep(delay);
+
+		print("Tap" + toStr(time()-tamp));
+		
 		return true;
 	}else{
+		print("Tap" + toStr(time()-tamp));
+		
 		return false;
 	};
 };
@@ -127,6 +134,15 @@ function Tap_RandomRect(left,top,right,bottom){
 	device.click(Random_num(left+num1,right-num1),Random_num(top+num2,bottom-num2));
 }
 
-
+//寻找图片 - 找到并点击
+function FindImage(img){
+	var rect = findImg(scriptDir+"/"+img,0,0,0,0,32,2,0x101010,0.9);
+	if(-1 != rect.left){
+		device.click(rect.left+10,rect.top+10);
+		//Tap_RandomRect(rect.left, rect.top, rect.right, rect.bottom);
+		sleep(Random_num(1000, 1500));
+		return true;
+	}else{return false;};
+};
 
 
