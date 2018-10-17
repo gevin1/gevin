@@ -70,14 +70,20 @@ function Switch_App(){
 	
 };
 
+//是否运行
 function Is_RunApp(app){
 
-	if(device.getAct() != Get_Config(app,"activity")){
+	var tamp = time();
+	
+	if(device.getAct().split("/")[0] != Get_Config(app,"activity").split("/")[0]){
 		execute("am start -n " + Get_Config(app,"activity"));
 		WaitMessage(20,"启动应用");
 		IsUpDataApp(app);
 		return true;
-	}else{return false;};
+	}else{
+		print("Tap" + toStr(time()-tamp));
+		return false;
+	};
 	
 };
 
@@ -90,6 +96,7 @@ function Is_RunApp(app){
 
 function 聚看点(){
 	var appName = "聚看点";
+	var activity;
 	
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -115,10 +122,13 @@ function 聚看点(){
 
 		//随机选择标题栏
 		Random_title(["推荐","美文","健康","资讯","娱乐","搞笑"]);
-
+		
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(0,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
+
+		//获取服务与组件名
+		activity = device.getAct();
 		
 		//选择文章
 		Tap("res","com.xiangzi.jukandian:id/item_artical_three_title_tv",3000);
@@ -128,21 +138,14 @@ function 聚看点(){
 		while(time()-wait_news<=15*1000){
 			
 			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(undefined != findView(By.text("评论得金币"))){
+			if(activity != device.getAct()){
 
 				sleep(2000);
 				var bool = true;
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 
-					if(bool){	
-						var news_zk = By.res('readBtn').getView();
-						if(null != By.res('readBtn').getView()){
-							news_zk.click();
-							sleep(Random_num(1300,2000));
-							bool = false;
-						};  
-					};
+					if(bool){if(FindImage("jkd_zk.png")){bool = false;};};
 
 					if(Is_RunApp(appName)){break;};
 					
@@ -156,7 +159,7 @@ function 聚看点(){
 			
 			sleep(1500);
 		};
-		
+
 	};
 }
 
@@ -235,6 +238,7 @@ function 趣看点(){
 function 惠头条(){
 	var tamp_read = 0;
 	var appName = "惠头条";
+	var activity;
 	
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -272,6 +276,8 @@ function 惠头条(){
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(0,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
 		
 		//选择文章
 		Tap("text",Pattern.compile("[0-9]+分钟前|[0-9]+小时前"),4000);
@@ -280,8 +286,7 @@ function 惠头条(){
 		var wait_news = time();
 		while(time()-wait_news<=15*1000){
 			
-			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(Is_TextView("写评论...")){
+			if(activity != device.getAct()){
 				sleep(2000);
 
 				var bool = true;
@@ -313,6 +318,7 @@ function 惠头条(){
 function 微鲤看看(){
 	var tamp_read = 0;
 	var appName = "微鲤看看";
+	var activity;
 	
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -359,6 +365,8 @@ function 微鲤看看(){
 			};
 		};
 		
+		activity = device.getAct();
+		
 		//选择文章
 		Tap("res","cn.weli.story:id/tv_title",3000);
 
@@ -366,8 +374,7 @@ function 微鲤看看(){
 		var wait_news = time();
 		while(time()-wait_news<=15*1000){
 			
-			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(Is_TextView("写评论...")){
+			if(activity != device.getAct()){
 				sleep(1000);
 
 				var wait_read = time();
@@ -395,6 +402,7 @@ function 微鲤看看(){
 function 趣看天下(){
 	var tamp_read = 0;
 	var appName = "趣看天下"
+	var activity;
 	
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -428,6 +436,8 @@ function 趣看天下(){
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(0,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
 		
 		//选择文章
 		Tap("text",Pattern.compile("[0-9]+评|刚刚|[0-9]+分钟前"),3000);
@@ -436,8 +446,7 @@ function 趣看天下(){
 		var wait_news = time();
 		while(time()-wait_news<=15*1000){
 			
-			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(Is_TextView("写评论")){
+			if(activity != device.getAct()){
 				sleep(1000);
 
 				var bool = true;
@@ -469,6 +478,7 @@ function 趣看天下(){
 function 东方头条(){
 	var tamp_read = 0;
 	var appName = "东方头条";
+	var activity;
 	
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -502,6 +512,8 @@ function 东方头条(){
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(1,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
 		
 		//选择文章
 		Tap("text",Pattern.compile("[0-9]+阅读|[0-9]+万阅读"),4000);
@@ -511,7 +523,7 @@ function 东方头条(){
 		while(time()-wait_news<=20*1000){
 			
 			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(Is_TextView("快去发表伟大言论吧！")){
+			if(activity != device.getAct()){
 				sleep(2000);
 
 				var bool = true;
@@ -519,11 +531,11 @@ function 东方头条(){
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
 					if(bool){
-						var rect = findImg(scriptDir+"/dftt_ad.png",557,307,615,362,32,2,0x101010,0.9);
-						if(-1 != rect.left){device.click(rect.left+20, rect.top+20);};
+						
+						if(FindImage("dftt_ad.png")){bool = false;}
 						
 						var node = findView(By.desc('猜你喜欢 '));
-						if(undefined != node){
+						if(node){
 							var rect2 = node.getVisibleBounds();
 							device.click(360,Number(rect2.top)-320);
 							bool = false;
@@ -550,6 +562,7 @@ function 东方头条(){
 function 值得看看(){
 	var tamp_read = 0;
 	var appName = "值得看看";
+	var activity;
 	
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -584,6 +597,8 @@ function 值得看看(){
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(0,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
 		
 		//选择文章
 		Tap("text",Pattern.compile("[0-9]+阅|[0-9]+分钟前"),3000);
@@ -592,21 +607,14 @@ function 值得看看(){
 		var wait_news = time();
 		while(time()-wait_news<=20*1000){
 			
-			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(Is_TextView("评论一下…")){
+			if(activity != device.getAct()){
 				sleep(1000);
 
 				var bool = true;
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
-					if(bool){
-						var rect = findImg(scriptDir+"/zdkk_zk.png",0,0,0,0,32,2,0x101010,0.9);
-						if(-1 != rect.left){
-							device.click(rect.left+Random_num(-60,600), rect.top+Random_num(-10,10));
-							bool = false;
-						};
-					};
+					if(bool){if(FindImage("zdkk_zk.png")){bool = false;}};
 
 					if(Is_RunApp(appName)){break;};
 					
@@ -628,7 +636,8 @@ function 值得看看(){
 function 中青看点(){
 	var tamp_read = 0;
 	var appName = "中青看点";
-	
+	var activity;
+
 	//头条新闻_限时阅读
 	var wait_time = time();
 	while(time()-wait_time<=Time_Run){
@@ -659,6 +668,8 @@ function 中青看点(){
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(0,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
 		
 		//选择文章
 		Tap("text",Pattern.compile("[0-9]+阅读"),3000);
@@ -668,8 +679,9 @@ function 中青看点(){
 		while(time()-wait_news<=15*1000){
 			
 			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(Is_TextView("写评论...")){
-
+			if(activity != device.getAct()){
+				sleep(2000);
+				
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 
@@ -689,5 +701,695 @@ function 中青看点(){
 		
 	};
 };
+
+function 百姓头条(){
+	var tamp_read = 0;
+	var appName = "百姓头条";
+	
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+
+		//判断是否处于主界面状态
+		while(!Tap("text","刷新",3000)){
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap("text","确定",2000);
+		};
+
+		//随机选择标题栏
+		Random_title(["推荐","高价","养生","教育","美食","社会","娱乐","搞笑","历史"]);
+		
+		//随机选择 刷新 or 滑动列表
+		for(var i=1;i<=Random_num(0,4);i++)
+			Random_Swipt("top", Random_num(300,1000));
+		
+		//选择文章
+		Tap("text",Pattern.compile("[0-9]+万阅读|分享赚钱"),3000);
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+
+			Tap("text","取消",1000);
+			if(FindImage("bxtt_zk.png")){
+
+				var wait_read = time();
+				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+
+					if(Is_RunApp(appName) || Is_TextView("这篇文章您已经读很久了，建议换一篇哦！")){break;};
+					
+					Random_Swipt("top",Random_num(2000,3000));
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(2000,4000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+function 搜狐资讯(){
+	var tamp_read = 0;
+	var appName = "搜狐资讯";
+	var activity;
+
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+
+		//领红包
+		if(Tap("res","com.sohu.infonews:id/red_bag",2000)){
+			Tap("res","com.sohu.infonews:id/redbag_open",2000)
+		};
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","刷新",3000)){
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			device.pressBack();
+			sleep(2000);
+		};
+
+		if(0 == tamp_read && !Get_SginIn(appName)){
+			Tap("text","任务",Random_num(6000,8000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap("res","com.sohu.infonews:id/lottie_sign_btn",Random_num(3000,5000))
+			Tap("text","首页",Random_num(2000,3000));
+			Set_SginIn(appName);
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","要闻","娱乐","体育","国际","搞笑","南京","养生","情感"]);
+		
+		//随机选择 刷新 or 滑动列表
+		for(var i=1;i<=Random_num(0,4);i++)
+			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
+		
+		//选择文章
+		Tap("text",Pattern.compile("刚刚|[0-9]+分钟前|[0-9]+小时前"),3000);
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(activity != device.getAct()){
+				sleep(2000);
+				
+				var wait_read = time();
+				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+
+					if(Is_RunApp(appName)){break;};
+					
+					Random_Swipt("top",Random_num(2000,3000));
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(2000,3000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+function 今日视点(){
+	var tamp_read = 0;
+	var appName = "今日视点";
+	var activity;
+
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","资讯",3000)){
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			device.pressBack();
+			sleep(2000);
+		};
+
+		if(0 == tamp_read && !Get_SginIn(appName)){
+			Tap("text","赚钱",Random_num(8000,10000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap("text","签到",Random_num(3000,5000));
+			device.pressBack();
+			sleep(2000);
+			Tap("res","com.app.shidian:id/relay_box",Random_num(3000,5000))
+			device.pressBack();
+			sleep(2000);
+			Set_SginIn(appName);
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","热点","娱乐","养生","搞笑","励志","奇闻","财经","历史"]);
+		
+		//随机选择 刷新 or 滑动列表
+		for(var i=1;i<=Random_num(0,4);i++)
+			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
+		
+		//选择文章
+		Tap("text",Pattern.compile(" [0-9]{3,4}|[0-9]+评论.*"),3000);
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(activity != device.getAct()){
+				sleep(2000);
+				
+				var bool = true;
+				var wait_read = time();
+				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+
+					if(Is_RunApp(appName)){break;};
+
+					if(bool){if(Tap("text","点击展开全文▼",Random_num(1000,1500))){bool = false;};};
+					
+					Random_Swipt("top",Random_num(2000,3000));
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(2000,3000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+function 松鼠资讯(){
+
+	var tamp_read = 0;
+	var appName = "松鼠资讯";
+	var activity;
+
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","首页",3000)){
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			device.pressBack();
+			sleep(2000);
+		};
+
+		if(0 == tamp_read && !Get_SginIn(appName)){
+			Tap("text","赚钱",Random_num(8000,10000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap_RandomRect(180,338,537,399);
+			Tap("text","首页",Random_num(2000,3000));
+			Set_SginIn(appName);
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","热点","娱乐","养生","搞笑","情感","科技","美食","游戏"]);
+		
+		//随机选择 刷新 or 滑动列表
+		for(var i=1;i<=Random_num(0,4);i++)
+			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
+		
+		//选择文章
+		print(Tap("res","com.songshu.jucai:id/read_num",3000));
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(activity != device.getAct()){
+				sleep(2000);
+				
+				var bool = true;
+				var wait_read = time();
+				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+
+					if(Is_RunApp(appName)){break;};
+
+					if(bool){if(Tap("text","查看全文",Random_num(1000,1500))){bool = false;};};
+					
+					Random_Swipt("top",Random_num(2000,3000));
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(2000,3000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+function 快头条(){
+	var tamp_read = 0;
+	var appName = "快头条";
+	var activity;
+
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+
+		//领取时段奖励
+		Tap("res","com.ifeng.kuaitoutiao:id/rlv_hour_reward",Random_num(2000,3000));
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","新闻",3000)){
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			device.pressBack();
+			sleep(2000);
+		};
+
+		if(0 == tamp_read && !Get_SginIn(appName)){
+			Tap_RandomRect(414,1186,482,1276);
+			sleep(Random_num(10000,15000));
+			Tap_RandomRect(582,164,678,188);
+			sleep(Random_num(3000,5000));
+			Tap("text","新闻",Random_num(2000,3000));
+			Set_SginIn(appName);
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","军事","娱乐","养生","健康","图片","萌宠","小说","财经","体育","教育"]);
+		
+		//随机选择 刷新 or 滑动列表
+		for(var i=1;i<=Random_num(0,4);i++)
+			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
+		
+		//选择文章
+		Tap("text",Pattern.compile("[0-9]+评"),3000);
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(activity != device.getAct()){
+				sleep(2000);
+				
+				if("com.ifeng.kuaitoutiao/com.ifeng.news2.activity.SlideActivity" == device.getAct()){
+					
+					while(!Is_TextView("推荐图集")){
+						device.swipe(Random_num(600,718),Random_num(200,700),Random_num(10,100),Random_num(200,700),Random_num(10,50));
+						sleep(Random_num(2000,3000));
+					};
+					
+				}else{
+					
+					var bool = true;
+					var wait_read = time();
+					while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+	
+						if(Is_RunApp(appName)){break;};
+	
+						if(bool){if(FindImage("ktt_zk.png")){bool = false;};};
+						
+						Random_Swipt("top",Random_num(2000,3000));
+					};
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(2000,3000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+function 快马小报(){
+
+	var tamp_read = 0;
+	var appName = "快马小报";
+	var activity;
+
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","刷新",3000)){
+			device.pressBack();
+			sleep(2000);
+		};
+
+		if(0 == tamp_read && !Get_SginIn(appName)){
+			Tap("text","我的",Random_num(6000,8000));
+			device.pressBack();
+			sleep(2000);
+			Tap("res","com.kuaima.browser:id/sign_rel",Random_num(3000,4000));
+			device.pressBack();
+			sleep(2000);
+			Tap("text","小报",Random_num(2000,3000));
+			Set_SginIn(appName);
+		}
+
+		//随机选择标题栏
+		device.swipe(Random_num(500,600),Random_num(148,191),Random_num(1,100),Random_num(148,191),Random_num(10,50));
+		device.swipe(Random_num(500,600),Random_num(148,191),Random_num(1,100),Random_num(148,191),Random_num(10,50));				
+		sleep(3000);
+		Tap_RandomRect(17,147,629,193);
+		Tap("text","刷新",3000)
+		
+		//随机选择 刷新 or 滑动列表
+		for(var i=1;i<=Random_num(0,4);i++)
+			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
+		
+		//选择文章
+		Tap("res","com.kuaima.browser:id/content",3000);
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(activity != device.getAct()){
+				sleep(2000);
+				
+				var bool = true;
+				var wait_read = time();
+				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+
+					if(Is_RunApp(appName)){break;};
+
+					if(bool){if(Tap("text","展开查看全文",Random_num(1000,2000))){bool = false;};};
+					
+					Random_Swipt("top",Random_num(4000,5000));
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(3000,4000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+function 蚂蚁头条(){
+
+	var tamp_read = 0;
+	var appName = "蚂蚁头条";
+	var activity;
+
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","刷新",3000)){
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap("res","com.ldzs.zhangxin:id/iv_back",Random_num(2000,3000));
+			Tap("text","继续阅读",1000);
+		};
+
+		if(0 == tamp_read && !Get_SginIn(appName)){
+			Tap("text","任务",Random_num(8000,10000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap_RandomRect(463,259,642,316);
+			sleep(4000);
+			device.pressBack();
+			sleep(2000);
+			Tap("text","看点",Random_num(2000,3000));
+			Set_SginIn(appName);
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","热点","美文","育儿","社会","娱乐","国内","健康","笑话"]);
+		
+		//随机选择 刷新 or 滑动列表
+		for(var i=1;i<=Random_num(1,4);i++)
+			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
+		
+		//选择文章
+		Tap("text",Pattern.compile("[0-9]+阅读|刚刚|[0-9]+分钟前"),3000);
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(activity != device.getAct()){
+				sleep(2000);
+				
+				var bool = true;
+				var wait_read = time();
+				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+
+					if(Is_RunApp(appName)){break;};
+					
+					if(bool){if(FindImage("mytt_zk.png") || FindImage("mytt_zk2.png")){bool = false;};};
+					
+					Random_Swipt("top",Random_num(2000,3000));
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(2000,3000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+function 牛牛头条(){
+
+	var tamp_read = 0;
+	var appName = "牛牛头条";
+	var activity;
+
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+
+		//领取时段奖励
+		Tap("text","点击领取",Random_num(2000,3000));
+		
+		//判断是否处于主界面状态
+		while(!Tap("text",Pattern.compile("刷新|资讯"),3000)){
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+		};
+
+		if(0 == tamp_read && !Get_SginIn(appName)){
+			Tap("text","任务",Random_num(6000,8000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap_RandomRect(463,259,642,316);
+			sleep(2000);
+			Tap("text","资讯",Random_num(2000,3000));
+			Set_SginIn(appName);
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","搞笑","娱乐","科技","汽车","体育","财经","军事","时尚","游戏","健康"]);
+
+		activity = device.getAct();
+		
+		//选择文章
+		if(Random_num(0,1)){
+			Tap_RandomRect(82,1085,375,1149);
+		}else{
+			Tap_RandomRect(167,561,609,624);
+		};
+		
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(activity != device.getAct()){
+				sleep(2000);
+
+				//寻找不到进度条 - 则返回
+				if(findView(By.res("com.huolea.bull:id/id_activity_news_details_progress_layout"))){
+					var bool = true;
+					var wait_read = time();
+					while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+	
+						if(Is_RunApp(appName)){break;};
+						
+						if(bool){
+							node = findView(By.desc('猜你喜欢 '));
+							if(node){
+								var rect2 = node.getVisibleBounds();
+								device.click(360,Number(rect2.top)-230);
+								sleep(1500);
+								bool = true;
+							};
+						};
+						
+						Random_Swipt("top",Random_num(2000,2500));
+					};
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(2000,3000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+function 大众看点(){
+
+	var tamp_read = 0;
+	var appName = "大众看点";
+	var activity;
+	var num = 0;
+
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+
+		//领取时段奖励
+		Tap("res","com.dzkandian:id/gold_animation",Random_num(2000,3000));
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","看点",3000)){
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap("res","com.ldzs.zhangxin:id/iv_back",Random_num(2000,3000));
+			Tap("text","继续阅读",1000);
+		};
+
+		for(var i=0;i<=num;i++){
+			device.swipe(Random_num(100,600),Random_num(200,300),Random_num(100,600),Random_num(700,900),Random_num(10,20));
+		};
+		
+		if(0 == tamp_read && !Get_SginIn(appName)){
+			Tap("text","任务中心",Random_num(8000,10000));
+			Tap("text","立即签到",Random_num(2000,3000));
+			Tap("text","看点",Random_num(2000,3000));
+			Set_SginIn(appName);
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","美食","旅游","时尚","健康","汽车","房产","文化","娱乐"]);
+		
+		//随机选择 刷新 or 滑动列表
+		for(var i=1;i<=Random_num(1,4);i++){
+			num++;
+			Random_Swipt("top", Random_num(300,1000));
+		};
+			
+		activity = device.getAct();
+		
+		//选择文章
+		Tap("text",Pattern.compile("[0-9]+-[0-9]+-[0-9]+"),3000);
+
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(activity != device.getAct()){
+				sleep(2000);
+				
+				var bool = true;
+				var wait_read = time();
+				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
+
+					if(Is_RunApp(appName)){break;};
+					
+					if(bool){if(Tap("desc","展开全文 ")){bool = false;};};
+					
+					Random_Swipt("top",Random_num(2500,4000));
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(2000,3000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
+function 微信(){
+
+	Tap("text","腾讯新闻",Random_num(2500,4000));
+	Tap_RandomRect(238,655,491,1227);
+	sleep(Random_num(8000,15000));
+
+	var wait_read = time();
+	while(time()-wait_read<=Random_num(30,50)*1000){
+		Random_Swipt("top",Random_num(2500,4000));
+	};
+
+	device.pressBack();
+	sleep(Random_num(2000,3000));
+	device.pressBack();
+	sleep(Random_num(2000,3000));
+
+	
+}
+
 
 
