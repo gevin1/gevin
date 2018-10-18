@@ -96,7 +96,9 @@ function Is_RunApp(app){
 
 function 聚看点(){
 	var appName = "聚看点";
+	var tamp_read = 0
 	var activity;
+	var news_num;
 	
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -104,6 +106,8 @@ function 聚看点(){
 		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
 
 		Is_RunApp(appName);
+
+		By.res('com.xiangzi.jukandian:id/pager_jinbi_num').getText()
 		
 		//领取时段奖励
 		if(null == By.clazz('android.widget.RelativeLayout').getText()){
@@ -111,15 +115,39 @@ function 聚看点(){
 			sleep(3000);
 			if(Is_TextView("开箱成功")){device.pressBack();};
 		};
-		
+
 		//判断是否处于主界面状态
 		while(!Tap("text","刷新",3000)){
 			if(false == Get_SginIn(appName) && Tap("text","一键签到")){Set_SginIn(appName);}
-			Tap("text",Pattern.compile("我知道了|继续赚钱|忽略|返回|.*close.*"),Random_num(2000,3000));
-			Tap("res", "com.xiangzi.jukandian:id/image_update_cancle", 2000);
-			Tap("res","com.xiangzi.jukandian:id/ll_web_bottom_back", 2000);
+			Tap("text",Pattern.compile("我知道了|继续赚钱|忽略|返回|.*close.*|不要奖励"),Random_num(2000,3000));
+			Tap("res", Pattern.compile(".*image_update_cancle|.*ll_web_bottom_back|.*close.*"), 2000);
 		};
 
+		if( 0 == tamp_read){
+			news_num = By.res('com.xiangzi.jukandian:id/pager_jinbi_num').getText();
+		}else if(1 <= tamp_read){
+			device.swipe(20,176,580,175,Random_num(10,30));
+			if(news_num == By.res('com.xiangzi.jukandian:id/pager_jinbi_num').getText()){
+				Tap("text","我的",5000);
+				Tap("res", Pattern.compile(".*close.*"), 2000);
+				Tap_RandomRect(28,73,70,115);	//设置按钮
+				Random_Swipt("top",Random_num(1500,2000));
+				Tap("text","退出登录",5000);
+				var dl_num = 0;
+				while(!Is_TextView("刷新")){
+					Tap("text",Pattern.compile("微信登录|确定登录"),8000);
+					
+					if("com.xiangzi.jukandian/.wxapi.WXEntryActivity" == device.getAct()){
+						Tap_RandomRect(226,798,515,843);	//微信登录按钮
+						sleep(10000);
+						device.pressBack();
+					};
+				
+					if(dl_num++ >= 4){return;};
+				};
+			};
+		};
+		
 		//随机选择标题栏
 		Random_title(["推荐","美文","健康","资讯","娱乐","搞笑"]);
 		
@@ -151,7 +179,8 @@ function 聚看点(){
 					
 					Random_Swipt("top",Random_num(2500,4000));
 				};
-				
+
+				tamp_read++;
 				device.pressBack();
 				sleep(Random_num(2000,3000));
 				break;
@@ -427,6 +456,7 @@ function 趣看天下(){
 			Tap("text","每日金币",Random_num(8000,10000));
 			device.pressBack();
 			sleep(2000);
+			Tap("text","刷新",Random_num(8000,10000));
 			Set_SginIn(appName);
 		}
 
@@ -1374,22 +1404,37 @@ function 大众看点(){
 
 function 微信(){
 
+	//阅读腾讯新闻
 	Tap("text","腾讯新闻",Random_num(2500,4000));
 	Tap_RandomRect(238,655,491,1227);
 	sleep(Random_num(8000,15000));
-
 	var wait_read = time();
-	while(time()-wait_read<=Random_num(30,50)*1000){
-		Random_Swipt("top",Random_num(2500,4000));
-	};
+	while(time()-wait_read<=Random_num(30,50)*1000){Random_Swipt("top",Random_num(2500,4000));};
+	device.pressBack();
+	sleep(Random_num(2000,3000));
+	device.pressBack();
+	sleep(Random_num(2000,3000));
 
+	//随机浏览朋友圈 - 随机点赞
+	Tap("text","发现",Random_num(1500,2000));
+	Tap("text","朋友圈",Random_num(6000,8000));
+	for(var i=0;i<Random_num(2,6);i++){
+		for(var i=0;i<Random_num(2,6);i++){Random_Swipt("top",Random_num(2000,4000));};
+		Tap("desc","评论",Random_num(2000,3000));
+		Tap("text","赞",Random_num(1500,2000));
+	};
 	device.pressBack();
-	sleep(Random_num(2000,3000));
-	device.pressBack();
-	sleep(Random_num(2000,3000));
+	sleep(Random_num(3000,4000));
 
 	
-}
+	Tap("text","微信",Random_num(1500,2000));
+	Tap_RandomRect(35,168,660,245);
+	sleep(Random_num(3000,4000));
+	Tap("res","com.tencent.mm:id/aca",Random_num(1500,2000));
+	Tap("clazz","android.widget.EditText",Random_num(1500,2000));
+
+	
+};
 
 
 
