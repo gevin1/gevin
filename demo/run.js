@@ -138,7 +138,10 @@ function 聚看点(){
 				Tap_RandomRect(612,1208,680,1270);
 				sleep(Random_num(1000,2000));
 			};
-			if(!Update_Id(appName)){return;};
+			if(Is_TextView("微信登录")){
+				if(!Update_Id(appName)){return;};
+			};
+			
 			news_num = By.res('com.xiangzi.jukandian:id/pager_jinbi_num').getText();
 			
 		}else if(1 <= tamp_read){
@@ -913,7 +916,7 @@ function 今日视点(){
 		activity = device.getAct();
 		
 		//选择文章
-		Tap("text",Pattern.compile(" [0-9]{3,4}|[0-9]+评论.*"),3000);
+		Tap("res","com.app.shidian:id/item_public_time",3000);
 
 		//等待文章加载
 		var wait_news = time();
