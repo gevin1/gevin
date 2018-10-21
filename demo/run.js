@@ -62,20 +62,29 @@ function Switch_App(){
 	for(a in Run_List){	
 		Time_Run = Get_Config(Run_List[a],"time_run") * 60000;
 		Time_Read = Get_Config(Run_List[a],"time_read");
-		toast("准备启动 | " + Run_List[a]);
+		toast("准备启动 | " + Run_List[a]); 
 		Get_Config(Run_List[a],"func")();
 		execute("am force-stop "+Get_Config(Run_List[a],"activity").split("/")[0]);
 		sleep(2000);
 	};
 	
 };
-
+                                           
 //是否运行
 function Is_RunApp(app){
 
 	var tamp = time();
 	
 	if(device.getAct().split("/")[0] != Get_Config(app,"activity").split("/")[0]){
+		
+		device.pressHome();
+		sleep(1000);
+		device.pressMenu();
+		sleep(2000);
+		Tap("desc",Pattern.compile(".*双击清理全部任务"),2000);
+		device.pressHome();
+		sleep(1000);
+		
 		execute("am start -n " + Get_Config(app,"activity"));
 		WaitMessage(20,"启动应用");
 		IsUpDataApp(app);
@@ -122,9 +131,16 @@ function 聚看点(){
 			Tap("text",Pattern.compile("我知道了|继续赚钱|忽略|返回|.*close.*|不要奖励"),Random_num(2000,3000));
 			Tap("res", Pattern.compile(".*image_update_cancle|.*ll_web_bottom_back|.*close.*"), 2000);
 		};
-
+		
 		if( 0 == tamp_read){
+			
+			for(var i=0;i<=2;i++){
+				Tap_RandomRect(612,1208,680,1270);
+				sleep(Random_num(1000,2000));
+			};
+			if(!Update_Id(appName)){return;};
 			news_num = By.res('com.xiangzi.jukandian:id/pager_jinbi_num').getText();
+			
 		}else if(1 <= tamp_read){
 			device.swipe(20,176,580,175,Random_num(10,30));
 			if(news_num == By.res('com.xiangzi.jukandian:id/pager_jinbi_num').getText()){
@@ -133,18 +149,7 @@ function 聚看点(){
 				Tap_RandomRect(28,73,70,115);	//设置按钮
 				Random_Swipt("top",Random_num(1500,2000));
 				Tap("text","退出登录",5000);
-				var dl_num = 0;
-				while(!Is_TextView("刷新")){
-					Tap("text",Pattern.compile("微信登录|确定登录"),8000);
-					
-					if("com.xiangzi.jukandian/.wxapi.WXEntryActivity" == device.getAct()){
-						Tap_RandomRect(226,798,515,843);	//微信登录按钮
-						sleep(10000);
-						device.pressBack();
-					};
-				
-					if(dl_num++ >= 4){return;};
-				};
+				if(!Update_Id(appName)){return;};
 			};
 		};
 		
@@ -176,6 +181,8 @@ function 聚看点(){
 					if(bool){if(FindImage("jkd_zk.png")){bool = false;};};
 
 					if(Is_RunApp(appName)){break;};
+
+					Tap("text","不要奖励",Random_num(1000,1500));
 					
 					Random_Swipt("top",Random_num(2500,4000));
 				};
@@ -240,12 +247,12 @@ function 趣看点(){
 		while(time()-wait_news<=15*1000){
 			
 			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(Tap("text","点击阅读全文",Random_num(1000,2000))){
+			if(Is_TextView("字体调节")){
 
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
-					Tap("text","继续阅读"),Random_num(2500,4000);
+					Tap("res","com.zhangku.qukandian:id/header_information_read_all_btn"),Random_num(2500,4000);
 					
 					if(Is_RunApp(appName)){break;};
 					
@@ -347,23 +354,26 @@ function 惠头条(){
 function 微鲤看看(){
 	var tamp_read = 0;
 	var appName = "微鲤看看";
-	var activity;
-	
+
 	//头条新闻_限时阅读
 	var wait_time = time();
 	while(time()-wait_time<=Time_Run){
 		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
 
 		Is_RunApp(appName);
-		
+
 		//领取时段奖励
 		if(Tap("text","+50",3000)){
 			device.pressBack();
 			sleep(1500);
 		};
+
+		if(Tap("text","领金币",Random_num(3000,4000))){
+			Tap("text",Pattern.compile("继续阅读|知道了"),Random_num(1500,2000));	
+		};
 		
 		//判断是否处于主界面状态
-		while(!Tap("text","头条",3000)){
+		while(!Tap("text","头条")){
 			if(!Tap("text",Pattern.compile("忽略|.*close.*"),Random_num(2000,3000))){
 				device.pressBack();
 				sleep(2000);
@@ -379,53 +389,49 @@ function 微鲤看看(){
 			Set_SginIn(appName);
 		}
 
+		//随机选择标题栏
+		Random_title(["推荐","财经","军事","热点","美图","女神"]);
+
 		if(Tap("text","领金币",Random_num(3000,4000))){
 			Tap("text",Pattern.compile("继续阅读|知道了"),Random_num(1500,2000));	
 		};
 
-		//随机选择标题栏
-		Random_title(["推荐","财经","军事","热点","美图","女神"]);
-
-		//随机选择 刷新 or 滑动列表
-		for(var i=1;i<=Random_num(0,4);i++){
-			if(Tap("text","领金币",Random_num(3000,4000))){
-				Random_Swipt("top", Random_num(300,1000));
-				Tap("text",Pattern.compile("继续阅读|知道了"),Random_num(1500,2000));	
-			};
-		};
-		
-		activity = device.getAct();
-		
 		//选择文章
-		Tap("res","cn.weli.story:id/tv_title",3000);
+		By.res('cn.weli.story:id/tv_title').clickAt(Random_Arr([0,2]));
+		sleep(3000);
 
 		//等待文章加载
 		var wait_news = time();
 		while(time()-wait_news<=15*1000){
-			
-			if(activity != device.getAct()){
-				sleep(1000);
+
+			if(Is_TextView("写评论...")){
 
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
-
-					if(Is_RunApp(appName)){break;};
+					
+					if(!Is_TextView("写评论...") || Is_RunApp(appName)){break;};
 					
 					Tap("text",Pattern.compile("展开查看全文|收下啦"),Random_num(1000,2000));
 					
-					Random_Swipt("top",Random_num(2000,3500));
-				};
+					Random_Swipt("top",Random_num(2500,4000));
 				
+				};
+
 				device.pressBack();
 				tamp_read++;
 				sleep(Random_num(2000,3000));
 				break;
+				
+				
 			};
-			
-			sleep(1500);
+
+			sleep(2000);
+		
 		};
+
 		
 	};
+	
 };
 
 function 趣看天下(){
@@ -445,11 +451,9 @@ function 趣看天下(){
 		
 		//判断是否处于主界面状态
 		while(!Tap("text","刷新",3000)){
-			if(!Tap("text",Pattern.compile("忽略|.*close.*"),Random_num(2000,3000))){
-				Tap("text","首页",3000);
-				device.pressBack();
-				sleep(2000);
-			};
+			Tap("text",Pattern.compile("首页|忽略|.*close.*"),Random_num(2000,3000));
+			device.pressBack();
+			sleep(2000);
 		};
 
 		if(0 == tamp_read && !Get_SginIn(appName)){
@@ -483,10 +487,7 @@ function 趣看天下(){
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 					
-					if(bool){
-						Tap("desc","展开查看全文",Random_num(1000,2000));
-						bool = false;
-					};
+					if(bool){if(Tap("desc","展开查看全文",Random_num(1000,2000))){bool = false;};};
 
 					if(Is_RunApp(appName)){break;};
 					
@@ -530,8 +531,11 @@ function 东方头条(){
 
 		if(0 == tamp_read && !Get_SginIn(appName)){
 			Tap("text","任务",Random_num(6000,10000));
-			Tap("res","com.songheng.eastnews:id/uj",Random_num(3000,5000));
-			Tap("desc","立即签到",Random_num(3000,5000));
+			if(Tap("desc","立即签到",Random_num(3000,5000))){
+				Tap_RandomRect(332,973,386,1028);
+				sleep(2000);
+				Tap("desc","立即签到",Random_num(3000,5000))
+			};
 			Tap("text","新闻",Random_num(2000,3000));
 			Set_SginIn(appName);
 		}
@@ -562,7 +566,13 @@ function 东方头条(){
 					
 					if(bool){
 						
-						if(FindImage("dftt_ad.png")){bool = false;}
+						if(FindImage("dftt_ad.png"))
+						{
+							Tap_RandomRect(136,521,596,1000);
+							sleep(3000);
+							device.pressBack();
+							sleep(3000);
+						}
 						
 						var node = findView(By.desc('猜你喜欢 '));
 						if(node){
@@ -592,7 +602,6 @@ function 东方头条(){
 function 值得看看(){
 	var tamp_read = 0;
 	var appName = "值得看看";
-	var activity;
 	
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -603,8 +612,12 @@ function 值得看看(){
 
 		//判断是否处于主界面状态
 		while(!Tap("text","刷新",3000)){
-			Tap("text",Pattern.compile("继续阅读|确定"),Random_num(2000,3000));
+			Tap("text",Pattern.compile("继续阅读|取消"),Random_num(2000,3000));
 			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			if(Is_TextView("评论一下…")){
+				device.pressBack();
+				sleep(Random_num(2000,3000));
+			};
 			IsUpDataApp("值得看看");
 		};
 
@@ -619,16 +632,11 @@ function 值得看看(){
 		}
 
 		//随机选择标题栏
-		device.click(Random_num(640,715),Random_num(170,200));
-		sleep(Random_num(4000,5000));
-		Random_title(["推荐","美文","汽车","女人","娱乐","育儿","养生","生活","搞笑","健康","情感","国际","时尚"]);
-		while(!Is_TextView("刷新")){sleep(1000);};
+		By.clazz('android.view.View').clickAt(Random_num(1,6));
 		
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(0,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
-
-		activity = device.getAct();
 		
 		//选择文章
 		Tap("text",Pattern.compile("[0-9]+阅|[0-9]+分钟前"),3000);
@@ -637,7 +645,7 @@ function 值得看看(){
 		var wait_news = time();
 		while(time()-wait_news<=20*1000){
 			
-			if(activity != device.getAct()){
+			if(Is_TextView("评论一下…")){
 				sleep(1000);
 
 				var bool = true;
@@ -666,7 +674,6 @@ function 值得看看(){
 function 中青看点(){
 	var tamp_read = 0;
 	var appName = "中青看点";
-	var activity;
 
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -684,10 +691,15 @@ function 中青看点(){
 		if(0 == tamp_read && !Get_SginIn(appName)){
 			Tap_RandomRect(576,1202,685,1279);
 			sleep(Random_num(6000,10000));
+			if(!Is_TextView("任务中心")){
+				device.pressBack();
+				sleep(1000);
+			};
 			Tap("text","任务中心",Random_num(8000,12000));
 			Tap_RandomRect(135,293,591,359);	//点击签到按钮
 			sleep(Random_num(3000,5000));
 			device.pressBack();
+			sleep(1000);
 			Tap("text","首页",Random_num(2000,3000));
 			Set_SginIn(appName);
 		}
@@ -698,8 +710,6 @@ function 中青看点(){
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(0,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
-
-		activity = device.getAct();
 		
 		//选择文章
 		Tap("text",Pattern.compile("[0-9]+阅读"),3000);
@@ -709,7 +719,7 @@ function 中青看点(){
 		while(time()-wait_news<=15*1000){
 			
 			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(activity != device.getAct()){
+			if(Is_TextView("写评论...")){
 				sleep(2000);
 				
 				var wait_read = time();
@@ -753,7 +763,7 @@ function 百姓头条(){
 		Random_title(["推荐","高价","养生","教育","美食","社会","娱乐","搞笑","历史"]);
 		
 		//随机选择 刷新 or 滑动列表
-		for(var i=1;i<=Random_num(0,4);i++)
+		for(var i=1;i<=Random_num(1,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
 		
 		//选择文章
@@ -763,12 +773,16 @@ function 百姓头条(){
 		var wait_news = time();
 		while(time()-wait_news<=15*1000){
 
-			Tap("text","取消",1000);
-			if(FindImage("bxtt_zk.png")){
-
+			sleep(2000);
+			
+			if(FindImage("bxtt_zk.png") && Is_TextView("分享赚钱")){
+				sleep(1000);
+				
 				var wait_read = time();
 				while(time()-wait_read<=Random_num(Time_Read[0],Time_Read[1])*1000){
 
+					Tap("text","取消",1000);
+					
 					if(Is_RunApp(appName) || Is_TextView("这篇文章您已经读很久了，建议换一篇哦！")){break;};
 					
 					Random_Swipt("top",Random_num(2000,3000));
@@ -779,8 +793,6 @@ function 百姓头条(){
 				sleep(Random_num(2000,4000));
 				break;
 			};
-			
-			sleep(1500);
 		};
 		
 	};
@@ -814,6 +826,8 @@ function 搜狐资讯(){
 			Tap("text","任务",Random_num(6000,8000));
 			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
 			Tap("res","com.sohu.infonews:id/lottie_sign_btn",Random_num(3000,5000))
+			device.pressBack();
+			sleep(2000);
 			Tap("text","首页",Random_num(2000,3000));
 			Set_SginIn(appName);
 		}
@@ -915,7 +929,7 @@ function 今日视点(){
 
 					if(Is_RunApp(appName)){break;};
 
-					if(bool){if(Tap("text","点击展开全文▼",Random_num(1000,1500))){bool = false;};};
+					if(bool){if(Tap("text",Pattern.compile("点击展开全文.*"),Random_num(1000,1500))){bool = false;};};
 					
 					Random_Swipt("top",Random_num(2000,3000));
 				};
@@ -1256,6 +1270,7 @@ function 牛牛头条(){
 		
 		//判断是否处于主界面状态
 		while(!Tap("text",Pattern.compile("刷新|资讯"),3000)){
+			Tap("text","忽略",Random_num(2000,3000));
 			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
 		};
 
@@ -1402,6 +1417,79 @@ function 大众看点(){
 	};
 };
 
+function 惠视频(){
+
+	var tamp_read = 0;
+	var appName = "惠视频";
+	var activity;
+
+	//头条新闻_限时阅读
+	var wait_time = time();
+	while(time()-wait_time<=Time_Run){
+		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
+
+		Is_RunApp(appName);
+
+		//领取时段奖励
+		Tap("res","com.cashvideo:id/ll_receive",2000);
+		
+		//判断是否处于主界面状态
+		while(!Tap("text","首页",3000)){
+			Tap("text",Pattern.compile("忽略|继续阅读"),Random_num(2000,3000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+		};
+
+		if(0 == tamp_read && !Get_SginIn(appName)){
+			Tap("text","任务中心",Random_num(6000,8000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap_RandomRect(301,188,420,310);
+			sleep(2000);
+			Tap("text","首页",Random_num(2000,3000));
+			Set_SginIn(appName);
+		}
+
+		//随机选择标题栏
+		Random_title(["推荐","搞笑","娱乐","影视","音乐","游戏","科技","体育","军事"]);
+
+		//随机选择 刷新 or 滑动列表
+		for(var i=1;i<=Random_num(0,4);i++)
+			Random_Swipt("top", Random_num(300,1000));
+
+		activity = device.getAct();
+		
+		//选择文章
+		Tap("text",Pattern.compile("[0-9]+w次观看"),3000);
+		
+		//等待文章加载
+		var wait_news = time();
+		while(time()-wait_news<=15*1000){
+			
+			//获取文章类型 - 获取成功 表示 文章加载完成
+			if(activity != device.getAct()){
+				sleep(2000);
+
+				while(!device.hasObject(By.res('com.cashvideo:id/img_state_replay'))){
+
+					if(Is_RunApp(appName)){break;};
+
+					if(!device.hasObject(By.res('com.cashvideo:id/circle_progress'))){
+						Tap_RandomRect(600,1150,689,1239);
+					};
+					
+				};
+				
+				device.pressBack();
+				tamp_read++;
+				sleep(Random_num(2000,3000));
+				break;
+			};
+			
+			sleep(1500);
+		};
+		
+	};
+};
+
 function 微信(){
 
 	//阅读腾讯新闻
@@ -1437,4 +1525,26 @@ function 微信(){
 };
 
 
+function Update_Id(name){
+	switch (name) {
+		case "聚看点":
+			var dl_num = 0;
+			while(!Is_TextView("刷新")){
+				Tap("text",Pattern.compile("微信登录|确定登录"),8000);
+				
+				if("com.xiangzi.jukandian/.wxapi.WXEntryActivity" == device.getAct()){
+					Tap_RandomRect(226,798,515,843);	//微信登录按钮
+					sleep(10000);
+					device.pressBack();
+				};
 
+				sleep(3000);
+				
+				if(dl_num++ >= 4){return false};
+			};
+			return true;
+			break;
+		default:
+			break;
+	};
+};
