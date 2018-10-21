@@ -117,8 +117,8 @@ var Json_Config = [{
 		time_run:30,
 		time_read:[60,80],
 		activity:"com.ldzs.zhangxin/com.weishang.wxrd.activity.MainActivity",
-		by:"text",		//待修改
-		updata:"立即升级"	//待修改
+		by:"text",
+		updata:"安装"
 	},
 	"牛牛头条":{
 		func:function (){return 牛牛头条()},
@@ -133,6 +133,22 @@ var Json_Config = [{
 		time_run:30,
 		time_read:[60,80],
 		activity:"com.dzkandian/.mvp.common.ui.activity.MainActivity",
+		by:"text",
+		updata:"立即更新"
+	},
+	"惠视频":{
+		func:function (){return 惠视频()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.cashvideo/.MainTabActivity",
+		by:"text",
+		updata:"立即更新"
+	},
+	"微信":{
+		func:function (){return 微信()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.tencent.mm/.ui.LauncherUI",
 		by:"text",
 		updata:"立即更新"
 	}
@@ -157,10 +173,10 @@ var Json_SignIn = {
 		"快马小报":false,
 		"蚂蚁头条":false,
 		"牛牛头条":false,
-		"大众看点":false
+		"大众看点":false,
+		"惠视频":false
 	};
 	
-//微信 com.tencent.mm/.ui.LauncherUI
 
 var Path_Json = scriptDir+"/config.txt";
 
