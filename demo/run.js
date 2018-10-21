@@ -141,7 +141,7 @@ function 聚看点(){
 			if(Is_TextView("微信登录")){
 				if(!Update_Id(appName)){return;};
 			};
-			
+			Tap("text","看点",3000);
 			news_num = By.res('com.xiangzi.jukandian:id/pager_jinbi_num').getText();
 			
 		}else if(1 <= tamp_read){
