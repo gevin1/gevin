@@ -760,6 +760,7 @@ function 百姓头条(){
 		while(!Tap("text","刷新",3000)){
 			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
 			Tap("text","确定",2000);
+			Tap("desc","Navigate up",Random_num(2000,3000));
 		};
 
 		//随机选择标题栏
