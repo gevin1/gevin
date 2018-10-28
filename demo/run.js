@@ -1440,6 +1440,8 @@ function 惠视频(){
 		while(!Tap("text","首页",3000)){
 			Tap("text",Pattern.compile("忽略|继续阅读"),Random_num(2000,3000));
 			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			device.pressBack();
+			sleep(Random_num(2000,3000));
 		};
 
 		if(0 == tamp_read && !Get_SginIn(appName)){
@@ -1452,7 +1454,7 @@ function 惠视频(){
 		}
 
 		//随机选择标题栏
-		Random_title(["推荐","搞笑","娱乐","影视","音乐","游戏","科技","体育","军事"]);
+		By.clazz('android.widget.FrameLayout').clickAt(Random_num(9,16));
 
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(0,4);i++)
@@ -1475,9 +1477,7 @@ function 惠视频(){
 
 					if(Is_RunApp(appName)){break;};
 
-					if(!device.hasObject(By.res('com.cashvideo:id/circle_progress'))){
-						Tap_RandomRect(600,1150,689,1239);
-					};
+					FindImage("hsp_lhb.png");
 					
 				};
 				
