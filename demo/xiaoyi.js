@@ -139,7 +139,7 @@ function Random_Arr(arr){
 function FindImage(img){
 	var rect = findImg(scriptDir+"/"+img,0,0,0,0,32,2,0x101010,0.9);
 	if(-1 != rect.left){
-		device.click(rect.left+10,rect.top+10);
+		Tap_RandomRect(rect.left,rect.top,rect.right,rect.bottom);
 		sleep(Random_num(1000, 1500));
 		return true;
 	}else{return false;};
