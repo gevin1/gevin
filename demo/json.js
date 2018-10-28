@@ -133,16 +133,24 @@ var Json_Config = [{
 		time_run:30,
 		time_read:[60,80],
 		activity:"com.dzkandian/.mvp.common.ui.activity.MainActivity",
-		by:"text",
-		updata:"立即更新"
+		by:"text",		//待修改
+		updata:"立即更新"	//待修改
 	},
 	"惠视频":{
 		func:function (){return 惠视频()},
 		time_run:30,
 		time_read:[60,80],
 		activity:"com.cashvideo/.MainTabActivity",
-		by:"text",
-		updata:"立即更新"
+		by:"text",		//待修改
+		updata:"立即更新"	//待修改
+	},
+	"头条巴士":{
+		func:function (){return 头条巴士()},
+		time_run:30,
+		time_read:[60,80],
+		activity:"com.zm.news/.main.ui.HomeActivity",
+		by:"text",		//待修改
+		updata:"立即更新"	//待修改
 	},
 	"微信":{
 		func:function (){return 微信()},
@@ -174,7 +182,8 @@ var Json_SignIn = {
 		"蚂蚁头条":false,
 		"牛牛头条":false,
 		"大众看点":false,
-		"惠视频":false
+		"惠视频":false,
+		"头条巴士":false
 	};
 	
 
