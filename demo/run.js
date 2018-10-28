@@ -221,7 +221,7 @@ function 趣看点(){
 		
 		//判断是否处于主界面状态
 		while(!Tap("text","刷新",3000)){
-			if(!Tap("text",Pattern.compile("忽略|.*close.*"),Random_num(2000,3000))){
+			if(!Tap("text",Pattern.compile("忽略|.*close.*|继续阅读"),Random_num(2000,3000))){
 				device.pressBack();
 				sleep(2000);
 			};
@@ -1496,9 +1496,6 @@ function 头条巴士(){
 		toast("阅读时间 | 剩余"+toStr((Time_Run-(time()-wait_time))/1000)+"秒");
 
 		Is_RunApp(appName);
-
-		//领取时段奖励
-		Tap("res","com.cashvideo:id/ll_receive",2000);
 		
 		//判断是否处于主界面状态
 		while(!Tap("text","刷新",3000)){
@@ -1518,10 +1515,10 @@ function 头条巴士(){
 //		}
 
 		//随机选择标题栏
-		Tap_RandomRect(12,150,643,197);
+		Tap_RandomRect(12,150,630,197);
 		
 		//随机选择 刷新 or 滑动列表
-		for(var i=1;i<=Random_num(0,4);i++)
+		for(var i=1;i<=Random_num(1,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
 			
 		//选择文章
