@@ -512,7 +512,6 @@ function 趣看天下(){
 function 东方头条(){
 	var tamp_read = 0;
 	var appName = "东方头条";
-	var activity;
 	
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -549,9 +548,7 @@ function 东方头条(){
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(1,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
-
-		activity = device.getAct();
-		
+	
 		//选择文章
 		Tap("text",Pattern.compile("[0-9]+阅读|[0-9]+万阅读"),4000);
 
@@ -560,7 +557,7 @@ function 东方头条(){
 		while(time()-wait_news<=20*1000){
 			
 			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(activity != device.getAct()){
+			if(Is_TextView("快去发表伟大言论吧！")){
 				sleep(2000);
 
 				var bool = true;
