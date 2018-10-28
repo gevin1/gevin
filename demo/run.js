@@ -1254,7 +1254,6 @@ function 牛牛头条(){
 
 	var tamp_read = 0;
 	var appName = "牛牛头条";
-	var activity;
 
 	//头条新闻_限时阅读
 	var wait_time = time();
@@ -1283,8 +1282,6 @@ function 牛牛头条(){
 
 		//随机选择标题栏
 		Random_title(["推荐","搞笑","娱乐","科技","汽车","体育","财经","军事","时尚","游戏","健康"]);
-
-		activity = device.getAct();
 		
 		//选择文章
 		if(Random_num(0,1)){
@@ -1298,7 +1295,7 @@ function 牛牛头条(){
 		while(time()-wait_news<=15*1000){
 			
 			//获取文章类型 - 获取成功 表示 文章加载完成
-			if(activity != device.getAct()){
+			if(Is_TextView("写评论...")){
 				sleep(2000);
 
 				//寻找不到进度条 - 则返回
@@ -1506,7 +1503,7 @@ function 头条巴士(){
 		//判断是否处于主界面状态
 		while(!Tap("text","刷新",3000)){
 			//Tap("text",Pattern.compile("忽略|继续阅读"),Random_num(2000,3000));
-			//Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
+			Tap("res",Pattern.compile(".*close.*"),Random_num(2000,3000));
 			//device.pressBack();
 			//sleep(Random_num(2000,3000));
 		};
@@ -1521,8 +1518,8 @@ function 头条巴士(){
 //		}
 
 		//随机选择标题栏
-		Random_title(["推荐","新时代","娱乐","上海","健康","养生","搞笑","励志","生活","财经"]);
-
+		Tap_RandomRect(12,150,643,197);
+		
 		//随机选择 刷新 or 滑动列表
 		for(var i=1;i<=Random_num(0,4);i++)
 			Random_Swipt("top", Random_num(300,1000));
